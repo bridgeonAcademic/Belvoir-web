@@ -30,7 +30,7 @@ export default function Metricscard({
     >
       <p className={`text-[20px] font-medium`}>{title}</p>
       <div className="mt-4">
-        <h1 className={`flex gap-2 text-4xl font-bold`}>
+        <h1 className={`flex gap-2 text-4xl font-bold font-sans`}>
           {icon}{value}
         </h1>
       </div>

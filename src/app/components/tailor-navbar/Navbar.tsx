@@ -8,7 +8,7 @@ import NotificationDropdown from "../tailor-notification/notificationDropdown";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="fixed z-40 top-0 right-0 w-full bg-white border-b border-[#0E0E25]/40 gap-4 h-[50px] flex items-center justify-end p-4">
+    <div className="fixed z-10 top-0 right-0 w-full bg-white border-b border-[#0E0E25]/40 gap-4 h-[50px] flex items-center justify-end p-4">
       <p className="text-black font-Cormorant text-xl">name</p>
       <div className="relative h-10 w-10 rounded-full overflow-hidden border border-gray-300">
         <Image

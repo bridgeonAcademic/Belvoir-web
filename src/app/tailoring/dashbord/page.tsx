@@ -18,10 +18,10 @@ export default function Page() {
   const [drop, setDrop] = useState(false);
   return (
     <div className="p-4 bg-white min-h-screen flex flex-col gap-4">
-      <h1 className="text-4xl text-black text-start font-Libre">
+      <h1 className="text-2xl xl:text-4xl text-black text-start font-Libre">
         Welcome Back!!
       </h1>
-      <div className="grid grid-cols-4 gap-4 font-Cormorant font-medium">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 font-Cormorant font-medium">
         <Metricscard
           title="Totel Revenue"
           value="10,250"
@@ -124,11 +124,10 @@ export default function Page() {
         <Ordertable />
       </div>
       <div className="flex gap-4">
-        <div className="flex-1 p-2 bg-slate-300 rounded-md ">
-          <h2 className="text-2xl font-bold text-center text-black">
+        <div className="flex-1 p-2 bg-light rounded-md ">
+          <h2 className="text-2xl font-bold text-center text-dark font-Cormorant">
             Revenue Chart
           </h2>
-          <p className="text-black">graph</p>
         </div>
         <div>
           <NotificationDropdown />
