@@ -1,7 +1,5 @@
 "use client";
 
-import NotificationDropdown from "@/app/components/tailor-notification/notificationDropdown";
-import Ordertable from "@/app/components/tailor-order-table/ordertable";
 import {
   BadgeIndianRupee,
   BoxIcon,
@@ -9,10 +7,15 @@ import {
   ChevronsUp,
   FilterIcon,
   PackageOpenIcon,
-  Star
+  Star,
 } from "lucide-react";
 import { useState } from "react";
-import Metricscard from "../../components/tailor-merics-card/metricscard";
+import Metricscard from "../../../../../components/ui/tailor-merics-card/metricscard";
+import NotificationDropdown from "../../../../../components/ui/tailor-notification/notificationDropdown";
+import Ordertable from "../../../../../components/ui/tailor-order-table/ordertable";
+// import "../../../../styles/globals.css";
+// import Metricscard from "@/app/components/tailor-merics-card/metricscard";
+// import Ordertable from "@/app/components/tailor-order-table/ordertable";
 
 export default function Page() {
   const [drop, setDrop] = useState(false);
@@ -67,9 +70,7 @@ export default function Page() {
             <FilterIcon size={16} />
             <p>Filter</p>
           </div>
-          {
-            drop ? (<ChevronsUp size={16} />):(<ChevronsDown size={16} />)
-          }
+          {drop ? <ChevronsUp size={16} /> : <ChevronsDown size={16} />}
           <div
             className={`transition-all duration-300 ease-out absolute grid grid-cols-1 gap-1 min-w-[240px] top-8 left-0 bg-white p-2 rounded-lg shadow-lg ${
               drop

@@ -20,15 +20,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
         <p className="hover:bg-white/10 rounded-md w-full px-10 py-1 cursor-pointer">
           Orders
         </p>
-        <p className="hover:bg-white/10 rounded-md w-full px-10 py-1 cursor-pointer">
-          Tasks
-        </p>
-        <p className="hover:bg-white/10 rounded-md w-full px-10 py-1 cursor-pointer">
-          Reports
-        </p>
-        <p className="hover:bg-white/10 rounded-md w-full px-10 py-1 cursor-pointer">
-          Settings
-        </p>
+        
       </div>
       <div className="w-full">
         <button className="w-full rounded-md py-1 bg-slate-200 font-Libre text-xl font-medium text-[#0E0E25]">

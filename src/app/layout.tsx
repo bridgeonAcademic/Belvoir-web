@@ -1,5 +1,6 @@
 // app/layout.tsx
-import "./globals.css"; // Import global CSS
+import "../../styles/globals.css";
+// import "./globals.css";
 
 export default function Layout({
   children,
