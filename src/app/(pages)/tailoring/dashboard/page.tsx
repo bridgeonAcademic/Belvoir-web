@@ -10,9 +10,9 @@ import {
   Star,
 } from "lucide-react";
 import { useState } from "react";
-import Metricscard from "../../../../../components/ui/tailor-merics-card/metricscard";
-import NotificationDropdown from "../../../../../components/ui/tailor-notification/notificationDropdown";
-import Ordertable from "../../../../../components/ui/tailor-order-table/ordertable";
+import Metricscard from "../../../../components/ui/tailor-merics-card/metricscard";
+import NotificationDropdown from "../../../../components/ui/tailor-notification/notificationDropdown";
+import Ordertable from "../../../../components/ui/tailor-order-table/ordertable";
 // import "../../../../styles/globals.css";
 // import Metricscard from "@/app/components/tailor-merics-card/metricscard";
 // import Ordertable from "@/app/components/tailor-order-table/ordertable";
@@ -97,6 +97,7 @@ export default function Page() {
             <button
               onClick={() => {
                 setDrop(false);
+                
               }}
               className="w-full text-center text-sm text-dark bg-blue-100 rounded-lg p-1"
             >
@@ -122,9 +123,9 @@ export default function Page() {
         </div>
       </div>
       <div>
-        <Ordertable />
+        <Ordertable height="overflow-x-auto" />
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 ">
         <div className="flex-1 p-2 bg-light rounded-md ">
           <h2 className="text-2xl font-bold text-center text-dark font-Cormorant">
             Revenue Chart

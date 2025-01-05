@@ -1,4 +1,8 @@
-export default function Ordertable() {
+interface OrdertableProps {
+  height: string;
+}
+
+export default function Ordertable({ height }: OrdertableProps) {
   const data = [
     {
       id: 1001,
@@ -70,10 +74,81 @@ export default function Ordertable() {
       status: "Pending",
       deadline: "2025-01-09",
     },
+    {
+      id: 1011,
+      name: "Emily Davis",
+      date: "2025-01-06",
+      status: "Pending",
+      deadline: "2025-01-10",
+    },
+    {
+      id: 1012,
+      name: "Daniel Martinez",
+      date: "2025-01-07",
+      status: "Shipped",
+      deadline: "2025-01-11",
+    },
+    {
+      id: 1013,
+      name: "Sophia Lee",
+      date: "2025-01-08",
+      status: "Delivered",
+      deadline: "2025-01-12",
+    },
+    {
+      id: 1014,
+      name: "Michael Brown",
+      date: "2025-01-09",
+      status: "Cancelled",
+      deadline: "2025-01-13",
+    },
+    {
+      id: 1015,
+      name: "Olivia Taylor",
+      date: "2025-01-10",
+      status: "Pending",
+      deadline: "2025-01-14",
+    },
+    {
+      id: 1016,
+      name: "Liam Wilson",
+      date: "2025-01-11",
+      status: "Shipped",
+      deadline: "2025-01-15",
+    },
+    {
+      id: 1017,
+      name: "Mia Johnson",
+      date: "2025-01-12",
+      status: "Delivered",
+      deadline: "2025-01-16",
+    },
+    {
+      id: 1018,
+      name: "Noah Anderson",
+      date: "2025-01-13",
+      status: "Pending",
+      deadline: "2025-01-17",
+    },
+    {
+      id: 1019,
+      name: "Isabella Thomas",
+      date: "2025-01-14",
+      status: "Cancelled",
+      deadline: "2025-01-18",
+    },
+    {
+      id: 1020,
+      name: "Ethan White",
+      date: "2025-01-15",
+      status: "Shipped",
+      deadline: "2025-01-19",
+    },
+    
   ];
 
   return (
-    <div className="w-full max-h-[350px] overflow-x-auto">
+    <div className={`w-full max-h-[350px] ${height}`}>
       <table className="w-full flex-1 table-auto border ">
         <thead className=" bg-[#0E0E25] text-white uppercase text-sm ">
           <tr>
@@ -110,7 +185,9 @@ export default function Ordertable() {
               <td className="px-4 py-2 text-center">{order.deadline}</td>
               <td className="px-4 py-2 text-center">
                 <div className="flex items-center justify-center gap-2">
-                  <button className="text-white bg-[#0E0E25] border rounded-md py-1 px-2 text-center cursor-pointer">
+                  <button
+                    className="text-white bg-[#0E0E25] border rounded-md py-1 px-2 text-center cursor-pointer"
+                  >
                     Update
                   </button>
                   <button className="text-white bg-[#0E0E25] border rounded-md py-1 px-2 text-center cursor-pointer">
