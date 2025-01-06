@@ -11,6 +11,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        dark: "#0E0E25",
+        light: "#E4F6FF",
+        morelight: "#F3FBFF",
+      },
+      fontFamily: {
+        jacques: ['Jacques Francois'],
+        Libre: ['Libre Caslon Display'],
+        Cormorant : ['Cormorant SC'],
       },
     },
   },
