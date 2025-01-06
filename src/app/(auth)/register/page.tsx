@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Eye, EyeOff } from 'lucide-react';
 
-const LoginComponent = () => {
+const RegistrationComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -14,7 +14,9 @@ const LoginComponent = () => {
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 relative">
-        <h1 className="text-white font-serif text-3xl pl-6 pt-4 z-10 relative">Belvoir.</h1>
+        <h1 className="text-white font-serif text-3xl pl-6 pt-4 z-10 relative">
+          Belvoir.
+        </h1>
         <div className="absolute left-0 top-0 h-screen w-1/2 overflow-hidden">
           <Image
             src="/login/bg.jpg"
@@ -31,20 +33,32 @@ const LoginComponent = () => {
         <div className="w-96 p-8">
           <div className="text-center mb-12">
             <h1 className="font-serif text-3xl mb-1">Belvoir.</h1>
-            <p className="text-gray-600 text-sm">Welcome Back!</p>
+            <p className="text-gray-600 text-sm">Create Account</p>
           </div>
 
           <form className="space-y-6">
             <div className="space-y-5">
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Name"
+                className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
+              />
+
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
+              />
+
+              <input
+                type="tel"
+                placeholder="Phone"
                 className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
               />
 
               <div className="relative">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
                 />
@@ -58,20 +72,14 @@ const LoginComponent = () => {
               </div>
             </div>
 
-            <div className="text-right">
-              <a href="#" className="text-xs text-gray-500 hover:text-gray-800">
-                forgot password?
-              </a>
-            </div>
-
             <button className="w-full bg-gray-900 text-white py-3 rounded-sm hover:bg-gray-800 transition-colors text-sm">
-              Login
+              Register
             </button>
 
             <div className="text-center text-xs text-gray-500">
-              Don&apos;t have an account?{' '}
+              Already have an account?{" "}
               <a href="#" className="text-gray-800">
-                SignUp
+                Login
               </a>
             </div>
           </form>
@@ -81,4 +89,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default RegistrationComponent;
