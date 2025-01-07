@@ -1,4 +1,4 @@
-import Banner from "./components/ui/banner/banner";
+
 import Footer from "./components/ui/footer/Footer";
 import Navbar from "./components/ui/navbar/Navbar";
 
@@ -7,7 +7,7 @@ export default function Home() {
 
     <>
       <Navbar />
-      <Banner/>
+      
       <Footer />
       <div className="h-96"></div>
       <div className="h-96"></div>
