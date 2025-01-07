@@ -25,9 +25,9 @@ const Navbar = () => {
             </button>
             
             {/* Logo */}
-            <a href="/" className="flex-shrink-0">
+            <Link className="flex-shrink-0">
               <h1 className="text-2xl font-serif tracking-wide">Belvoir.</h1>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
