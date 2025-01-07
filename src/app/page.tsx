@@ -1,7 +1,6 @@
 import Banner from "./components/ui/banner/banner";
 import Footer from "./components/ui/footer/Footer";
 import Navbar from "./components/ui/navbar/Navbar";
-import Image from 'next/image';
 
 export default function Home() {
   return (
