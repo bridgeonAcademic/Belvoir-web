@@ -3,9 +3,9 @@ import Footer from "./components/ui/footer/Footer";
 import Navbar from "./components/ui/navbar/Navbar";
 import Image from 'next/image';
 
-
 export default function Home() {
   return (
+
     <>
       <Navbar />
       <Banner/>
@@ -13,6 +13,7 @@ export default function Home() {
       <div className="h-96"></div>
       <div className="h-96"></div>
     </>
+
   );
 }
 
