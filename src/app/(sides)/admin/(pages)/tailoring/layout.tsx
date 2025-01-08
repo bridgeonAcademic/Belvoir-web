@@ -2,8 +2,8 @@
 
 import { MenuIcon, XIcon } from "lucide-react";
 import { useState } from "react";
-import Navbar from "../components/ui/tailor-navbar/Navbar";
-import Sidebar from "../components/ui/tailor-sidebar/Sidebar";
+import Navbar from "../../components/ui/tailor-navbar/Navbar";
+import Sidebar from "../../components/ui/tailor-sidebar/Sidebar";
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [isOpen, setIsOpen] = useState(true);
