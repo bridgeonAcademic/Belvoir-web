@@ -1,5 +1,5 @@
 "use client";
-import Metricscard from "@/components/ui/tailor-merics-card/metricscard";
+import Metricscard from "@/app/(sides)/admin/components/ui/tailor-merics-card/metricscard";
 import { ChevronDown, ChevronUp, Package2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

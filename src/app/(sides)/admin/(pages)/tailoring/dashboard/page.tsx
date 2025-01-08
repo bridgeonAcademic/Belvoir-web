@@ -10,9 +10,9 @@ import {
   Star,
 } from "lucide-react";
 import { useState } from "react";
-import Metricscard from "../../../../components/ui/tailor-merics-card/metricscard";
-import NotificationDropdown from "../../../../components/ui/tailor-notification/notificationDropdown";
-import Ordertable from "../../../../components/ui/tailor-order-table/ordertable";
+import Metricscard from "../../components/ui/tailor-merics-card/metricscard";
+import NotificationDropdown from "../../components/ui/tailor-notification/notificationDropdown";
+import Ordertable from "../../components/ui/tailor-order-table/ordertable";
 // import "../../../../styles/globals.css";
 // import Metricscard from "@/app/components/tailor-merics-card/metricscard";
 // import Ordertable from "@/app/components/tailor-order-table/ordertable";

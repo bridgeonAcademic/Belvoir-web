@@ -1,16 +1,21 @@
+import Footer from "./(sides)/users/components/ui/footer/Footer";
+import Navbar from "./(sides)/users/components/ui/navbar/Navbar";
 
-import Footer from "./components/ui/footer/Footer";
-import Navbar from "./components/ui/navbar/Navbar";
+
 
 export default function Home() {
   return (
 
     <>
-      <Navbar />
+      <Navbar/>
       
-      <Footer />
+       
+
+      <Footer/>
+
       <div className="h-96"></div>
       <div className="h-96"></div>
+      
     </>
 
   );

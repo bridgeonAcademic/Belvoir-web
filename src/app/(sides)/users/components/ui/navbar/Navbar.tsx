@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Search, ShoppingCart, User, Menu, X, Link } from 'lucide-react';
+import Link from 'next/link';
+import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,25 +26,35 @@ const Navbar = () => {
             </button>
             
             {/* Logo */}
-            <Link className="flex-shrink-0">
+            <Link href="#">
+            <div className="flex-shrink-0">
               <h1 className="text-2xl font-serif tracking-wide">Belvoir.</h1>
+            </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex space-x-8">
-              <Link className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-                Home
+              <Link href="#">
+                <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+                  Home
+                </div>
               </Link>
-              <Link className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-                Services
+              <Link href="#">
+                <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+                  Services
+                </div>
               </Link>
-              <Link className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-                About
+              <Link href="#">
+                <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+                  About
+                </div>
               </Link>
-              <Link className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-                Contact
+              <Link href="#">
+                <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+                  Contact
+                </div>
               </Link>
             </div>
           </div>
@@ -66,17 +77,25 @@ const Navbar = () => {
       {/* Mobile menu - only for navigation links */}
       <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
         <div className="px-4 pt-2 pb-4 space-y-2 bg-white/40 backdrop-blur-md">
-          <Link className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-            Home
+          <Link href="#">
+            <div className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+              Home
+            </div>
           </Link>
-          <Link className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-            Services
+          <Link href="#">
+            <div className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+              Services
+            </div>
           </Link>
-          <Link className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-            About
+          <Link href="#">
+            <div className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+              About
+            </div>
           </Link>
-          <Link className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-            Contact
+          <Link href="#">
+            <div className="block px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+              Contact
+            </div>
           </Link>
         </div>
       </div>
