@@ -18,7 +18,7 @@ const AboutSection: React.FC = () => {
             About Us
           </h2>
           <p className="text-lg text-gray-600">
-            Welcome to <span className="font-semibold text-blue-600">Belvoir</span> — your one-stop solution for tailoring, laundry, and rental services! We specialize in providing high-quality, personalized services to meet your needs. Whether you're looking to have your clothes tailored to perfection, need laundry done with care, or require rentals for events or day-to-day use, we've got you covered.
+            Welcome to <span className="font-semibold text-blue-600">Belvoir</span> — your one-stop solution for tailoring, laundry, and rental services! We specialize in providing high-quality, personalized services to meet your needs. Whether you&apos;re looking to have your clothes tailored to perfection, need laundry done with care, or require rentals for events or day-to-day use, we&apos;ve got you covered.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ const AboutSection: React.FC = () => {
             Our Vision
           </h3>
           <p className="text-lg text-gray-600">
-            At <span className="font-semibold text-blue-600">Belvoir</span>, we aim to provide the highest level of service with a focus on sustainability, customer satisfaction, and convenience. We're here to make your life easier, one service at a time.
+            At <span className="font-semibold text-blue-600">Belvoir</span>, we aim to provide the highest level of service with a focus on sustainability, customer satisfaction, and convenience. We&apos;re here to make your life easier, one service at a time.
           </p>
         </div>
       </div>

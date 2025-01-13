@@ -10,7 +10,7 @@ const WhyBelvoirSection: React.FC = () => {
             Why Belvoir?
           </h2>
           <p className="text-lg text-gray-600">
-            At <span className="font-semibold text-blue-600">Belvoir</span>, we are committed to providing unmatched service and convenience. Here's why our customers love us:
+            At <span className="font-semibold text-blue-600">Belvoir</span>, we are committed to providing unmatched service and convenience. Here&apos;s why our customers love us:
           </p>
         </div>
 
@@ -28,7 +28,7 @@ const WhyBelvoirSection: React.FC = () => {
           <img src="/home/affordable.png" alt="" className="w-[60px] h-[60px]" />
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">Affordable Pricing</h3>
             <p className="text-gray-600">
-              At Belvoir, we offer competitive pricing for all our services without compromising on quality. Whether you're renting equipment or getting custom tailoring, you'll find our prices reasonable.
+              At Belvoir, we offer competitive pricing for all our services without compromising on quality. Whether you&apos;re renting equipment or getting custom tailoring, you&apos;ll find our prices reasonable.
             </p>
           </div>
 

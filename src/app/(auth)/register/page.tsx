@@ -21,7 +21,7 @@ import Link from 'next/link';
 const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [status, setStatus] = useState('idle');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string|null>(null);
   const router = useRouter();
 
   const validationSchema = Yup.object({
@@ -43,7 +43,7 @@ const Registration = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleReg = async (values: { name: any; email: any; password: any; phone: any; }) => {
+  const handleReg = async (values: { name: string; email: string; password: string; phone: string; }) => {
     try {
       setStatus('loading');
       setError(null);
@@ -55,13 +55,13 @@ const Registration = () => {
       console.log(response.data);
       setStatus('succeeded');
       router.push('/login');
-    } catch (error:any) {
-      setError(error.response?.data?.message || 'signup failed');
+    } catch (error) {
+      setError('signup failed');
       console.error("reg",error);
       setStatus('failed');
     }
   };
-
+  
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 relative">
@@ -97,7 +97,7 @@ const Registration = () => {
             validationSchema={validationSchema}
             onSubmit={handleReg}
           >
-            {({ isSubmitting }) => (
+            {({ }) => (
               <Form className="space-y-6">
                 <div className="space-y-5">
                   <div>

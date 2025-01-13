@@ -13,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string|null>(null);
 
   const router = useRouter();
 
@@ -37,8 +37,8 @@ const Login = () => {
 
       
       router.push("/");
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Login failed");
+    } catch (error) {
+      setError("Login failed");
       console.error("Login error:", error);
       setStatus("failed");
     }
