@@ -26,16 +26,19 @@ const Login = () => {
     try {
       setStatus("loading");
       setError(null);
-
+  
       const values = { email, password };
       console.log("Login values:", values);
-
+  
       const response = await axiosInstance.post("/Auth/login", values);
-
+  
       console.log("Login response:", response.data);
-      setStatus("succeeded");
-
+  
       
+      localStorage.setItem("userData", JSON.stringify(response.data.data));
+
+  
+      setStatus("succeeded");
       router.push("/");
     } catch (error) {
       setError("Login failed");
@@ -43,6 +46,7 @@ const Login = () => {
       setStatus("failed");
     }
   };
+  
 
   return (
     <div className="min-h-screen flex">
@@ -50,13 +54,13 @@ const Login = () => {
         <h1 className="text-white font-serif text-3xl pl-6 pt-4 z-10 relative">
           Belvoir.
         </h1>
-        <div className="absolute left-0 top-0 h-screen w-1/2 overflow-hidden">
+        <div className="absolute left-0 top-0 h-screen overflow-hidden">
           <Image
             src="/login/bg.jpg"
             alt="Elegant jacket display"
-            className="object-cover object-center w-full h-full transform scale-110"
+            className="object-cover  w-full h-full transform scale-110"
             width={400}
-            height={400}
+            height={400} 
           />
           <div className="absolute inset-0 bg-black opacity-20"></div>
         </div>

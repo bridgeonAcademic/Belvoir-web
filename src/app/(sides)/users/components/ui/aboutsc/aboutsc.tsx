@@ -7,7 +7,7 @@ const AboutSection: React.FC = () => {
         {/* Logo Section */}
         <div className="flex justify-center mb-8">
           <img
-            src="/home/tie.png" // Update with your logo's path
+            src="/home/tie.png" 
             alt="Company Logo"
             className="h-16 w-auto"
           />
