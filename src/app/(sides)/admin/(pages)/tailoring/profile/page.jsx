@@ -4,31 +4,31 @@ import Link from "next/link";
 import axiosInstance from "../../../../../../../api/axiosinstance/axiosInstance";
 
 const ProfilePage = () => {
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [tailordata, setTailorData] = useState(null);
+  // const [tailordata, setTailorData] = useState(null);
 
-  const fetchTailorProfile = async () => {
-    try {
+  // const fetchTailorProfile = async () => {
+  //   try {
 
      
 
 
-      const response = await axiosInstance.get("/Tailor/tailorprofile", 
-      );
+  //     const response = await axiosInstance.get("/Tailor/tailorprofile", 
+  //     );
 
-      setTailorData(response.data);
+  //     setTailorData(response.data);
 
-      console.log(response.data);
-    } catch (error: any) {
-      console.error("Failed to fetch profile:", error.message || error);
-      throw error; // Re-throw the error for further handling
-    }
-  };
+  //     console.log(response.data);
+  //   } catch (error: any) {
+  //     console.error("Failed to fetch profile:", error.message || error);
+  //     throw error; // Re-throw the error for further handling
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchTailorProfile();
-  }, []);
+  // useEffect(() => {
+  //   fetchTailorProfile();
+  // }, []);
 
   return (
     // Full-width container with responsive padding
@@ -75,7 +75,6 @@ const ProfilePage = () => {
             className="w-full p-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
           >
             <span className="text-lg font-medium">Change Password</span>
-            {/* <span>{showModal ? '↑' : '↓'}</span> */}
           </button>
         </div>
 
