@@ -1,5 +1,5 @@
 import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { addClothes, deleteClothes, editClothes, fetchAllClothes } from "../api/clothes-api"
+import { addClothes, deleteClothes,  fetchAllClothes } from "../api/clothes-api"
 
 
 
@@ -20,7 +20,7 @@ export const useAddClothes=()=>{
         }
     })
 }
-export const useDeleteClothes=(id)=>{
+export const useDeleteClothes=()=>{
     const queryClient=useQueryClient();
     return useMutation({
         mutationFn:deleteClothes,
