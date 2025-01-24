@@ -34,8 +34,7 @@ const Login = () => {
   
       console.log("Login response:", response.data);
   
-      
-      localStorage.setItem("userData", JSON.stringify(response.data.data));
+      localStorage.setItem("userData", response.data.data.accessToken);
 
   
       setStatus("succeeded");
