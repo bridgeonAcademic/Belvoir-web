@@ -65,7 +65,7 @@ console.log(tailordata);
         <div className="relative p-4 sm:p-6 bg-white rounded-lg shadow-sm">
           {/* Badge - responsive positioning */}
           <div className="absolute right-4 top-4 px-3 py-1 text-sm bg-green-100 text-green-800 rounded">
-            Tailor
+            Delivery
           </div>
 
           {status === "loading" ? (
@@ -111,14 +111,14 @@ console.log(tailordata);
         </div>
 
         <Link
-          href="/admin/tailoring/orders"
+          href="/admin/delivery/task"
           className="block bg-white rounded-lg shadow-sm hover:shadow transition-shadow"
         >
           <div className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-semibold">Orders</h2>
-                <p className="text-gray-600 mt-1">View all orders</p>
+                <h2 className="text-xl font-semibold">Tasks</h2>
+                <p className="text-gray-600 mt-1">View all Tasks</p>
               </div>
               <span className="text-2xl">📦</span>
             </div>
