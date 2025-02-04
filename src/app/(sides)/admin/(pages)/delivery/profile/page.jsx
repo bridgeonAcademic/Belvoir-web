@@ -8,10 +8,6 @@ import Profileui from '../../../(super-admin)/components/shimmerui/profileui'
 
 
 
-
-
-
-
 const ProfilePage = () => {
   const [status,setStatus] = useState('idle');
   const [showModal, setShowModal] = useState(false);

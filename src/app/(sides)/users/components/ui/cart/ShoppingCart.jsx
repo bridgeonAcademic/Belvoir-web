@@ -52,6 +52,7 @@ function ShoppingCart() {
   }
   
   console.log(cartItems);
+  console.log(cartItems);
   
   const updateQuantity = async (id, newQuantity) => {
     try {
