@@ -16,6 +16,7 @@ export const useFetchClothesWithoutQuery=()=>{
         queryFn:fetchClothesWithoutQuery
     });
 };
+
 export const useAddClothes=()=>{
     const queryClient=useQueryClient();
     return useMutation({

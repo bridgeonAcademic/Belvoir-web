@@ -5,9 +5,14 @@ export const fetchRentalProducts = async ({ queryKey }) => {
   const response = await axiosInstance.get(`/Rentals/paginated`, {
     params: { pagenumber: pagenumber, pagesize: pagesize },
   });
-  console.log("the data is --", response.data);
   return response.data;
 };
+
+export const FetchRentalById =async({queryKey})=>{
+  const [id]=queryKey
+  const response =await axiosInstance.get(`Rentals/${id}`)
+  return response.data
+}
 
 export const editRentalProducts = async () => {
   const response = await axiosInstance.put(`/Rentals/update?id=${id}`);

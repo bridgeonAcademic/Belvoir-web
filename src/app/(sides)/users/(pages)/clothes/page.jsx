@@ -54,10 +54,7 @@ function Page() {
     <main className="min-h-screen bg-white">
       <div>
         <NavbarCloth/>
-      </div>
-
-
-      
+      </div> 
       <div className="w-full h-[500px] relative mt-3">
         <Image
           src="/clothes/cloths.jpg"
