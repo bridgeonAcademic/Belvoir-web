@@ -5,7 +5,7 @@ import { ShoppingCart, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const NavbarCloth = () => {
+const CommonNavbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/40 backdrop-blur-md">
@@ -30,6 +30,7 @@ const NavbarCloth = () => {
             </div>
 
             <div className="flex items-center space-x-6">
+              
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <ShoppingCart size={18} />
               </button>
@@ -45,4 +46,4 @@ const NavbarCloth = () => {
   );
 };
 
-export default NavbarCloth;
+export default CommonNavbar;
