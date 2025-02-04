@@ -5,47 +5,46 @@ import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axiosInstance from "../../../../api/axiosinstance/axiosInstance";
+import axiosInstance from "../../../../axios/axiosinstance/axiosInstance";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState<string|null>(null);
+  const [error, setError] = useState(null);
 
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLog = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleLog = async (values) => {
     try {
       setStatus("loading");
       setError(null);
-  
-      const values = { email, password };
+
       console.log("Login values:", values);
-  
+
       const response = await axiosInstance.post("/Auth/login", values);
-  
+
       console.log("Login response:", response.data);
-  
+
       localStorage.setItem("userData", response.data.data.accessToken);
 
-  
       setStatus("succeeded");
       router.push("/");
     } catch (error) {
-      setError("Login failed");
+      setError(error.response?.data?.message || "Something went wrong");
       console.error("Login error:", error);
       setStatus("failed");
     }
   };
-  
 
   return (
     <div className="min-h-screen flex">
@@ -59,7 +58,8 @@ const Login = () => {
             alt="Elegant jacket display"
             className="object-cover  w-full h-full transform scale-110"
             width={400}
-            height={400} 
+            height={400}
+            priority
           />
           <div className="absolute inset-0 bg-black opacity-20"></div>
         </div>
@@ -72,24 +72,46 @@ const Login = () => {
             <p className="text-gray-600 text-sm">Welcome Back!</p>
           </div>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit(handleLog)}>
             <div className="space-y-5">
-              <input
-                type="text"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
-              />
+              <div>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                    value: /^\S+@\S+\.\S+$/,
+                    message: "Invalid email format",
+                    },
+                  })}
+                  className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                    },
+                  })}
                   className="w-full px-4 py-3 bg-white border-b border-gray-200 focus:border-gray-800 transition-colors outline-none"
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
@@ -100,8 +122,6 @@ const Login = () => {
               </div>
             </div>
 
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-
             <div className="text-right">
               <a href="#" className="text-xs text-gray-500 hover:text-gray-800">
                 Forgot password?
@@ -109,7 +129,7 @@ const Login = () => {
             </div>
 
             <button
-              onClick={handleLog}
+              type="submit"
               disabled={status === "loading"}
               className="w-full bg-gray-900 text-white py-3 rounded-sm hover:bg-gray-800 transition-colors text-sm flex justify-center"
             >
@@ -121,12 +141,18 @@ const Login = () => {
             </button>
 
             <div className="text-center text-xs text-gray-500">
-              Don&apos;t have an account? 
+              Don&apos;t have an account?{" "}
               <Link href="/register" className="text-gray-800">
                 SignUp
               </Link>
             </div>
           </form>
+
+          {error && (
+            <div className="w-full h-14 mt-2 text-red-500 text-sm text-center">
+              {error}
+            </div>
+          )}
         </div>
       </div>
     </div>
