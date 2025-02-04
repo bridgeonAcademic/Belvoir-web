@@ -3,6 +3,7 @@ import axiosInstance from "../../../../../../../api/axiosinstance/axiosInstance"
 import SimilarProducts from "../../../components/clothes/SimilarProducts";
 import Footer from "../../../components/ui/footer/Footer";
 import Link from "next/link";
+import CommonNavbar from "../../../components/navbar-common/CommonNavbar";
 
 export default async function DesignDetail({ params }) {
   const { id } = params;
@@ -25,6 +26,7 @@ export default async function DesignDetail({ params }) {
 
   return (
     <>
+    <CommonNavbar/>
       <div className="container mx-auto mt-8 p-4">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/2 flex flex-col items-center md:items-start">
