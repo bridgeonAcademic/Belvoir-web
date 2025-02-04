@@ -8,14 +8,10 @@ import Profileui from '../../../(super-admin)/components/shimmerui/profileui'
 
 
 
-
-
-
-
 const ProfilePage = () => {
   const [status,setStatus] = useState('idle');
   const [showModal, setShowModal] = useState(false);
-  const [deliverydata, setDelieryData] = useState({});
+  const [deliverydata, setDeliveryData] = useState({});
 
 const fetchDeliveryProfile = async () => {
 
@@ -37,7 +33,7 @@ console.log(token)
     });
 
 
-    setDelieryData(response.data.data);
+    setDeliveryData(response.data.data);
 
     
   } catch (error) {
@@ -50,7 +46,7 @@ console.log(token)
 
 };
 
-console.log(tailordata);
+console.log(deliverydata);
 
   useEffect(() => {
     fetchDeliveryProfile();
