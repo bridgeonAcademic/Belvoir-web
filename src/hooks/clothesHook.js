@@ -48,6 +48,7 @@ export const useFetchAllClothes = (
 //         queryFn:fetchClothesWithoutQuery
 //     });
 // };
+
 export const useAddClothes=()=>{
     const queryClient=useQueryClient();
     return useMutation({

@@ -57,7 +57,6 @@ function Page() {
       </div>
 
 
-      
       <div className="w-full h-[500px] relative mt-3">
         <Image
           src="/clothes/cloths.jpg"
