@@ -1,6 +1,6 @@
 "use client";
 import { notFound, useParams } from "next/navigation";
-import axiosInstance from "../../../../../../../api/axiosinstance/axiosInstance";
+import axiosInstance from "../../../../../../../axios/axiosinstance/axiosInstance";
 import SimilarProducts from "../../../components/Rentals/SimilarProducts";
 import Footer from "../../../components/ui/footer/Footer";
 import Link from "next/link";
@@ -10,15 +10,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import Loadercustom from "../../../components/ui/Loader"
 import Image from "next/image";
+import Navbar from "../../../components/ui/navbar/Navbar";
 export default function RentalDetail() {
   const params = useParams();
   const id = params?.id ;
-  const [cloth, setCloth] = useState<any>(null);
+  const [cloth, setCloth] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [activeimage, setactiveimage] = useState<any|null>(null);
-  const [similiarproducts, setsimiliarproducts] = useState<any|null>(null)
+  const [error, setError] = useState(null);
+  const [activeimage, setactiveimage] = useState(null);
+  const [similiarproducts, setsimiliarproducts] = useState(null)
   const [clicked, setclicked] = useState(false);
+  const [rating, setrating] = useState()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,6 +38,14 @@ export default function RentalDetail() {
           }
         })
         setsimiliarproducts(similiarProductresponse.data.data);
+
+        const ratingres = await axiosInstance.get(`/Rentals/rental-rating`, {
+          params: {productid:id},
+          headers:{
+            Authorization :`Bearer ${localStorage.getItem("userData")}`
+          }
+        });
+        setrating(ratingres.data.data);
        
       } catch (err) {
         console.log(err);
@@ -53,12 +63,13 @@ export default function RentalDetail() {
   if (cloth == null) return notFound() ;
   return (
     <>
+      <Navbar></Navbar>
       {cloth && (
         <div className="container mx-auto mt-8 p-4 pb-[40px]">
           <div className="flex flex-col md:flex-row">
             {/* Image on the left side */}
             <div className="md:w-1/2 flex flex-col justify-center md:justify-start">
-              <Image
+              <img
                 src={activeimage && activeimage}
                 alt="loading"
                 className="w-96 h-[300px] object-cover object-left-top rounded-lg"
@@ -66,7 +77,7 @@ export default function RentalDetail() {
              <div>
              {cloth?.images?.map((image, index) => (
               image.imagePath!=activeimage && (
-                <Image
+                <img
                   onClick={() => setactiveimage(image.imagePath)}
                   key={index}
                   src={image.imagePath}
@@ -125,9 +136,11 @@ export default function RentalDetail() {
             <div className="mt-4">
               <h4 className="text-md font-medium">Rating Review</h4>
               <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-12">
-                {[1, 2, 4].map((x, i) => (
-                  <RatingCard key={i}></RatingCard>
-                ))}
+                {rating?rating.map((x, i) => (
+                  <RatingCard key={i} data={x}></RatingCard>
+                )):
+                <div className="text-gray-500 ">No Reviews Yet..</div>
+                }
               </div>
               <button className="p-3 rounded-[20px] bg-[#0F172A] my-4 w-max text-white text-[12px] block m-auto">
                 View More
