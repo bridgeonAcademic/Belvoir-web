@@ -2,14 +2,14 @@
 import React from "react";
 import Container from "../../components/Rentals/Container";
 import Footer from "../../components/ui/footer/Footer";
-import NavbarCloth from "../../components/clothes/NavbarClothpage";
 import Carousel from "../../components/Rentals/Carousel"
+import Navbar from "../../components/ui/navbar/Navbar";
 function Page() {
 
   return (
     <main className="min-h-screen bg-white">
       <div>
-        <NavbarCloth/>
+        <Navbar/>
       </div> 
       <div className="h-[90vh]">
         <Carousel></Carousel>
