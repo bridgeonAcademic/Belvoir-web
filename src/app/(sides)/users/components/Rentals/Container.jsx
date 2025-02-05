@@ -3,24 +3,34 @@ import React, { useState } from "react";
 import Filter from "./Filter";
 import RentalCards from "./RentalCards";
 import { Menu, X, MoreVertical } from "lucide-react";
+import { UsefetchAllRentalProducts } from "@/hooks/rentalProductsHoook";
 
 function Container() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortType, setSortType] = useState(""); 
-  const [query,setQuery]=useState("");
-
+  const [searchdata, setsearchdata] = useState("");
+  const [minPrice, setMinPrice] = useState(); 
+  const [maxPrice, setMaxPrice] = useState();
   const handleSort = (type) => {
     setSortType(type);
     setMenuOpen(false); 
   };
-  
+
+  const [filterdata, setfilterdata] = useState({
+    gender: "",
+    garmenttype: "",
+    fabrictype: "",
+  });
+
+  const { data, isLoading, error } = UsefetchAllRentalProducts(1, 10,filterdata.gender,filterdata.garmenttype,filterdata.fabrictype,searchdata,minPrice,maxPrice);
+
   return (
     <main>
-      <div className="container mx-auto my-4 px-2">
-        <div className="flex flex-wrap items-center justify-between bg-white p-4 rounded-lg gap-4">
+      <div className="mx-auto my-4 px-2">
+        <div className="flex  flex-wrap items-center justify-end bg-white p-4 rounded-lg gap-4">
         
-          <div className="flex items-center flex-grow sm:flex-none space-x-2">
+          <div className="flex  items-center flex-grow sm:flex-none space-x-2">
          
             <button
               onClick={() => setFilterOpen(true)}
@@ -30,13 +40,13 @@ function Container() {
             </button>
 
             {/* Search Bar */}
-            <div className="flex flex-grow sm:flex-none rounded-3xl border-2 border-gray-500 overflow-hidden w-full max-w-[280px] sm:max-w-md">
+            <div className="flex flex-grow sm:flex-none  rounded-3xl border-2 border-gray-500 overflow-hidden w-full max-w-[280px] sm:max-w-md">
               <input
                 type="text"
-                value={query}
+                value={searchdata}
                 placeholder="Search Something..."
                 className="w-full outline-none bg-white text-gray-600 text-sm px-3 py-2"
-                onChange={(e)=>setQuery(e.target.value)}
+                onChange={(e)=>setsearchdata(e.target.value)}
               />
               <button className="flex items-center justify-center bg-black px-3">
                 <svg
@@ -52,32 +62,7 @@ function Container() {
           </div>
 
           <div className="relative">
-            <div className="hidden md:flex space-x-2">
-              <button
-                onClick={() => handleSort("asc")}
-                className={`px-4 py-2 rounded-full ${
-                  sortType === "asc" ? "bg-gray-400 text-white" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                Price Ascending
-              </button>
-              <button
-                onClick={() => handleSort("desc")}
-                className={`px-4 py-2 rounded-full ${
-                  sortType === "desc" ? "bg-gray-400 text-white" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                Price Descending
-              </button>
-              <button
-                onClick={() => handleSort("rating")}
-                className={`px-4 py-2 rounded-full ${
-                  sortType === "rating" ? "bg-gray-400 text-white" : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                Rating
-              </button>
-            </div>
+          
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -114,9 +99,8 @@ function Container() {
 
       <div className="flex">
         <div className="hidden md:block">
-          <Filter />
+          <Filter setfilterdata={setfilterdata} filterdata={filterdata} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} />
         </div>
-
         {filterOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
             <div className="w-3/4 sm:w-1/2 bg-white h-full p-4  transform translate-x-0 transition-transform">
@@ -128,7 +112,7 @@ function Container() {
           </div>
         )}
 
-        <RentalCards sortType={sortType}  query={query}/>
+        <RentalCards data={data} isLoading={isLoading} error={error}/>
       </div>
     </main>
   );
