@@ -45,7 +45,8 @@ import React from "react";
 import Container from "../../components/clothes/Container";
 import Image from "next/image";
 import Footer from "../../components/ui/footer/Footer";
-import CommonNavbar from "../../components/navbar-common/CommonNavbar";
+import Navbar from "../../components/ui/navbar/Navbar";
+import { Fullscreen } from "lucide-react";
 
 function Page() {
   const caption = "Elevate Your Style with Every Piece.";
@@ -53,10 +54,11 @@ function Page() {
   return (
     <main className="min-h-screen bg-white">
       <div>
-        <CommonNavbar/>
+        <Navbar/>
       </div>
 
 
+      
       <div className="w-full h-[500px] relative mt-3">
         <Image
           src="/clothes/cloths.jpg"
