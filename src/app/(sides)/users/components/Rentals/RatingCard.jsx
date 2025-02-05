@@ -20,7 +20,7 @@ function RatingCard() {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
        </p>{" "}
        {[...Array(fullstar)].map((_, i) => (
-          <span key={i} className="text-yellow-500">★</span> // Full star
+          <span key={i} className="text-yellow-500">★</span> 
         ))}
         {halfstar && <span className="text-yellow-500">☆</span>} {/* Half star */}
     </div>

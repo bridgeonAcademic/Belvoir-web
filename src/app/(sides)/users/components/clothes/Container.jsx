@@ -14,7 +14,7 @@ function Container() {
   const [designPattern, setDesignPattern] = useState("");
   const [pageNo, setPageNo] = useState(1); // Track current page
   const [hasMore, setHasMore] = useState(true); // Track if more data is available
-  const pageSize = 10; // Number of items per page
+  const pageSize = 1; // Number of items per page
 
   const { data, isLoading } = useFetchAllClothes(query, "price", sort, Material, designPattern,"" ,"",pageNo, pageSize);
   const [filteredData, setFilteredData] = useState([]);

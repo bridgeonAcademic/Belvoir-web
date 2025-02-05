@@ -1,52 +1,51 @@
 
-// import React from "react";
-// import Container from "../../components/clothes/Container";
-// import Image from "next/image";
-// import Footer from "../../components/ui/footer/Footer"
+// // import React from "react";
+// // import Container from "../../components/clothes/Container";
+// // import Image from "next/image";
+// // import Footer from "../../components/ui/footer/Footer"
 
-// function Page() {
-//   const word = "MAKEYOURFIT";
+// // function Page() {
+// //   const word = "MAKEYOURFIT";
 
-//   return (
-//     <main className="min-h-screen bg-white ">
-//       <div className="flex mt-4">
+// //   return (
+// //     <main className="min-h-screen bg-white ">
+// //       <div className="flex mt-4">
        
-//         <div className=" w-[100px] text-center ml-2 text-4xl font  font-serif">
-//           {word.split("").map((letter, index) => (
-//             <div className="mt-2" key={index}>{letter}</div>
-//           ))}
-//         </div>
+// //         <div className=" w-[100px] text-center ml-2 text-4xl font  font-serif">
+// //           {word.split("").map((letter, index) => (
+// //             <div className="mt-2" key={index}>{letter}</div>
+// //           ))}
+// //         </div>
 
         
-//         <div className="w-full h-[500px] relative mt-3">
-//     <Image
-//       src="/clothes/cloths.jpg"
-//       alt="cover image"
+// //         <div className="w-full h-[500px] relative mt-3">
+// //     <Image
+// //       src="/clothes/cloths.jpg"
+// //       alt="cover image"
      
-//       layout="fill"
-//       objectFit="cover"
-//     />
-//   </div>
-//       </div>
-//       <div className="mt-4">
-//         <Container/>
-//       </div>
-//       <div>
-//         <Footer/>
+// //       layout="fill"
+// //       objectFit="cover"
+// //     />
+// //   </div>
+// //       </div>
+// //       <div className="mt-4">
+// //         <Container/>
+// //       </div>
+// //       <div>
+// //         <Footer/>
         
-//       </div>
-//     </main>
-//   );
-// }
+// //       </div>
+// //     </main>
+// //   );
+// // }
 
-// export default Page;
+// // export default Page;
 
 import React from "react";
 import Container from "../../components/clothes/Container";
 import Image from "next/image";
 import Footer from "../../components/ui/footer/Footer";
 import Navbar from "../../components/ui/navbar/Navbar";
-import { Fullscreen } from "lucide-react";
 
 function Page() {
   const caption = "Elevate Your Style with Every Piece.";
@@ -57,13 +56,13 @@ function Page() {
         <Navbar/>
       </div>
 
-
       
-      <div className="w-full h-[500px] relative mt-3">
+      <div className="w-full h-[80vh] relative mt-3">
         <Image
           src="/clothes/cloths.jpg"
           alt="cover image"
           layout="fill"
+          
           objectFit="cover"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
@@ -83,3 +82,5 @@ function Page() {
 }
 
 export default Page;
+
+

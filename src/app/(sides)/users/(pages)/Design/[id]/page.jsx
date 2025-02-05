@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import axiosInstance from "../../../../../../../api/axiosinstance/axiosInstance";
+import axiosInstance from "../../../../../../../axios/axiosinstance/axiosInstance";
 import SimilarProducts from "../../../components/clothes/SimilarProducts";
 import Footer from "../../../components/ui/footer/Footer";
 import Link from "next/link";
