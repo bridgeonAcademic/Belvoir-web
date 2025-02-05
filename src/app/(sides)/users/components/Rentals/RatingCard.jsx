@@ -2,13 +2,11 @@ import React from "react";
 
 function RatingCard({data}) {
   const ratingval = data.ratingvalue; 
-
   function ConvertToStars(ratingval) {
     const fullstar = Math.floor(ratingval); 
     const halfstar = ratingval % 1 !== 0;
     return { fullstar, halfstar };
   }
-
   const { fullstar, halfstar } = ConvertToStars(ratingval); 
   return (
     <div className="rounded-[20px] shadow-custom p-[15px] mt-3">
@@ -22,9 +20,9 @@ function RatingCard({data}) {
           {data.message}
        </p>{" "}
        {[...Array(fullstar)].map((_, i) => (
-          <span key={i} className="text-yellow-500">★</span> // Full star
+          <span key={i} className="text-yellow-500">★</span> 
         ))}
-        {halfstar && <span className="text-yellow-500">☆</span>} {/* Half star */}
+        {halfstar && <span className="text-yellow-500">☆</span>}
     </div>
   );
 }

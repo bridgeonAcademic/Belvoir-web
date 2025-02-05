@@ -20,7 +20,14 @@ export default function RentalDetail() {
   const [activeimage, setactiveimage] = useState(null);
   const [similiarproducts, setsimiliarproducts] = useState(null)
   const [clicked, setclicked] = useState(false);
-  const [rating, setrating] = useState()
+  const [rating, setrating] = useState();
+  const [filterdata, setfilterdata] = useState({
+    gender: "",
+    garmenttype: "",
+    fabrictype: "",
+  });
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {

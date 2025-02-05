@@ -4,8 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {UsefetchAllRentalProducts} from "../../../../../hooks/rentalProductsHoook"  
 
-const RentalCards = ({ sortType, query }) => {
-  const { data, isLoading, error } = UsefetchAllRentalProducts(1, 10);
+const RentalCards = ({data,isLoading,error}) => {
   
   if (isLoading) {
     return (
@@ -14,10 +13,9 @@ const RentalCards = ({ sortType, query }) => {
       </div>
     );
   }
-
   return (  
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 px-3">
-      {data.data.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6  px-3">
+      {data.data ? (
         data.data.map((item) => (
           <div
             key={item.id}
@@ -36,7 +34,7 @@ const RentalCards = ({ sortType, query }) => {
 
               {/* Price and View Button */}
               <div className="flex items-center justify-between">
-                <div className="text-gray-900 font-bold text-[12px]">₹{item.price}</div>
+                <div className="text-gray-900 font-bold text-[12px]">₹{item.offerPrice}</div>
                 <Link href={`/users/Rentals/${item.id}`}>
                   <button className="bg-black text-white rounded-2xl px-4 py-1 hover:bg-white hover:text-black border transition text-[10px]">
                     View
