@@ -11,8 +11,19 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        dark: "#0E0E25",
+        light: "#E4F6FF",
+        morelight: "#F3FBFF",
+      },
+      fontFamily: {
+        jacques: ['Jacques Francois'],
+        Libre: ['Libre Caslon Display'],
+        Cormorant : ['Cormorant SC'],
+      },
+      boxShadow: {
+        'custom': '0px 3px 8px rgba(0, 0, 0, 0.24)',
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 } satisfies Config;
