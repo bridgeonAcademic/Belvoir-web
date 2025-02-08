@@ -50,20 +50,19 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex flex-1 items-center justify-center">
               <div className="flex space-x-8">
-                <Link href="#">
+                <Link href="/">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     Home
                   </div>
                 </Link>
-    
+                <Link href="/users/clothes">
+                  <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
+                    Tailoring
+                  </div>
+                </Link>
                 <Link href="/users/Rentals">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     Rentals
-                  </div>
-                </Link>
-                <Link href="#">
-                  <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
-                    Tailoring
                   </div>
                 </Link>
                 <Link href="#">
