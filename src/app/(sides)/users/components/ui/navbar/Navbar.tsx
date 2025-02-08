@@ -29,7 +29,7 @@ const Navbar = () => {
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
 
-              {/* Logo */}
+             
               <Link href="#">
                 <div className="flex-shrink-0 flex gap-2">
                   <Image
@@ -82,7 +82,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Icons - always visible */}
+         
             <div className="flex items-center space-x-6">
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <Search size={18} />
@@ -97,7 +97,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile menu - only for navigation links */}
         <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
           <div className="px-4 pt-2 pb-4 space-y-2 bg-white/40 backdrop-blur-md">
             <Link href="#">
