@@ -34,7 +34,7 @@ const RentalCards = ({data,isLoading,error}) => {
               {/* Price and View Button */}
               <div className="flex items-center justify-between">
                 <div className="text-gray-900 font-bold text-[12px]">₹{item.offerPrice}</div>
-                <Link href={`/users/Rentals/${item.id}`}>
+                <Link href={`/users/rentals/${item.id}`}>
                   <button className="bg-black text-white rounded-2xl px-4 py-1 hover:bg-white hover:text-black border transition text-[10px]">
                     View
                   </button>
