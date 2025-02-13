@@ -9,7 +9,7 @@ export default function Page() {
   const [data, setData] = useState()
    useEffect(() => {
     const fetchdata=async()=>{
-      var response =await axiosInstance.get("/Order/tailor");
+      const response =await axiosInstance.get("/Order/tailor");
       setData(response.data.data);
     } 
     fetchdata()
@@ -53,7 +53,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-
+      
       <div className="flex-grow w-full overflow-auto">
         <Ordertable height="overflow-visible" />
       </div>
