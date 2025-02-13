@@ -222,7 +222,7 @@ export default function RentalDetail() {
               </div>
               <div className="flex justify-between mt-4">
                 {ratingloading && <p className="text-gray-500">Loading...</p>}
-                <button
+                {rating &&  <button
                   className="p-3 rounded-[20px] bg-[#0F172A] my-4 w-max text-white text-[12px] block m-auto"
                   onClick={() => {
                     sethandlmore(!handlmore);
@@ -230,7 +230,8 @@ export default function RentalDetail() {
                   }}
                 >
                   {handlmore ? "View more" : "View less"}
-                </button>
+                </button>}
+               
               </div>
             </div>
           </div>
