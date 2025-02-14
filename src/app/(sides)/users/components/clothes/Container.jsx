@@ -10,55 +10,50 @@ function Container() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState(false);
-  const [Material, setMaterial] = useState([]);
-  const [designPattern, setDesignPattern] = useState([]);
-  const [pageNo, setPageNo] = useState(1); 
-  const [hasMore, setHasMore] = useState(true);
-  const [minPrice,setMinPrice]=useState("");
-  const [maxPrice,setMaxPrice]=useState("");
-  const [Color,setColor]=useState([]);
+  const [Material, setMaterial] = useState("");
+  const [designPattern, setDesignPattern] = useState("");
+  const [pageNo, setPageNo] = useState(1); // Track current page
+  const [hasMore, setHasMore] = useState(true); // Track if more data is available
+  const pageSize = 10; // Number of items per page
 
-
-  const pageSize = 4; 
-
-  const { data, isLoading } = useFetchAllClothes(query,"price",sort,Material,Color,designPattern,minPrice,maxPrice,pageNo,pageSize);
+  const { data, isLoading } = useFetchAllClothes(query, "price", sort, Material, designPattern,"" ,"",pageNo, pageSize);
   const [filteredData, setFilteredData] = useState([]);
-  // console.log(Material)
+  console.log(data)
 
-  
+  // Update filteredData when new data is fetched
   useEffect(() => {
     if (data?.data) {
-  
-      // console.log(data.data)
+      // If it's the first page, replace the data
+      console.log(data.data)
       if (pageNo === 1) {
         setFilteredData(data.data);
       } else {
-      
+        // Otherwise, append the new data
         setFilteredData((prev) => [...prev, ...data.data]);
       }
 
-     
+      // Check if there's more data to load
       if (data.data.length < pageSize) {
-        setHasMore(false); 
+        setHasMore(false); // No more data to load
       }
     }
-  }, [data, pageNo, pageSize,Material]);
+  }, [data, pageNo, pageSize]);
 
- 
+  // Handle scroll event to load more data
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-     
+      // Check if the user has scrolled to the bottom
       if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading && hasMore) {
-        setPageNo((prev) => prev + 1); 
+        setPageNo((prev) => prev + 1); // Load the next page
       }
     };
 
-   
+    // Attach the scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-   
+    // Cleanup the event listener on unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoading, hasMore]);
 
@@ -141,7 +136,7 @@ function Container() {
 
       <div className="flex">
         <div className="hidden md:block">
-          <Filter setMaterial={setMaterial} Material={Material} setDesignPattern={setDesignPattern} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} setColor={setColor} />
+          <Filter setMaterial={setMaterial} setDesignPattern={setDesignPattern} />
         </div>
 
         {filterOpen && (
@@ -150,8 +145,7 @@ function Container() {
               <button onClick={() => setFilterOpen(false)} className="absolute top-4 right-4">
                 <X size={24} />
               </button>
-              <Filter setMaterial={setMaterial} Material={Material} setDesignPattern={setDesignPattern} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} setColor={setColor} />
-
+              <Filter />
             </div>
           </div>
         )}

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import LoadingUi from "../ui/loading/loadingui";
 
 const ClothCards = ({isLoading,filteredData}) => {
  
@@ -9,8 +8,7 @@ const ClothCards = ({isLoading,filteredData}) => {
   if (isLoading) {
     return (
       <div className="flex justify-center mx-auto  h-screen">
-              <LoadingUi/>
-
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
       </div>
     );
   }
