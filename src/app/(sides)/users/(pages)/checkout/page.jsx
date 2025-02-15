@@ -5,7 +5,11 @@ import OrderSummary from "../../components/Checkout/OrderSummary";
 import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import Lodingcustom from "../../components/ui/Loader"
 import Navbar from "../../components/ui/navbar/Navbar";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 function OrderPage() {
+
+  const router=useRouter()
   const [step, setStep] = useState(1); 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [address, setaddress] = useState();
@@ -23,10 +27,13 @@ function OrderPage() {
       setaddress(temp);
     } catch (error) {
       console.log(error);
+      if(error.response.status==401){
+        toast.error("please login")
+        router.push("/login")
+      }
     }finally{
       setloading(false)
     }
-   
   }
   useEffect(() => {  
       FetchAdddress();

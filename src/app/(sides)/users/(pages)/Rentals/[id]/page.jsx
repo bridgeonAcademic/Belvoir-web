@@ -11,12 +11,14 @@ import {
   faCaretLeft,
   faCaretRight,
   faHeart,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import Loadercustom from "../../../components/ui/Loader";
 import Image from "next/image";
 import Navbar from "../../../components/ui/navbar/Navbar";
 import LoaderCustom from "../../../components/ui/Loader";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 export default function RentalDetail() {
   const router = useRouter();
   const params = useParams();
@@ -35,7 +37,8 @@ export default function RentalDetail() {
     fabrictype: "",
   });
   const [quantity, setQuantity] = useState(1);
-
+  const [userRating, setUserRating] = useState(0);
+  const [reviewMessage, setReviewMessage] = useState("");
   const [ratingloading, setratingloading] = useState(false);
   const [stars, setstars] = useState({
     fullstar: "",
@@ -95,15 +98,40 @@ export default function RentalDetail() {
   if (loading) return <Loadercustom></Loadercustom>;
   if (cloth == null) return notFound();
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
+  const handleRatingSubmit = async () => {
+    if (userRating === 0 || reviewMessage.trim() === "") {
+      toast.error("Please select a rating and enter a review message.");
+      return;
+    }
+    try {
+      await axiosInstance.post(
+        "/Rental/rental-rating",
+        {
+           message: userRating,
+           ratingvalue: reviewMessage
+        },
+        {
+          params: {
+            productid: id,
+          },
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
+        }
+      );
+      toast.success("Review submitted successfully!");
+      setUserRating(0);
+      setReviewMessage("");
+    } catch (error) {
+      toast.error("Failed to submit review. Please try again.");
+      if (error.response.status == 401) {
+        toast.error("please login");
+        router.push("/login");
+      }
     }
   };
+
   const addToCart = async (item) => {
     const token = localStorage.getItem("userData");
 
@@ -125,6 +153,10 @@ export default function RentalDetail() {
 
       return response.data;
     } catch (error) {
+      if (error.response.status == 401) {
+        toast.error("please login");
+        router.push("/login");
+      }
       console.error("cart", error);
     }
   };
@@ -201,17 +233,18 @@ export default function RentalDetail() {
               </span>
               <div className="flex">
                 {/* Render full stars */}
-                {[...Array(stars?.fullstar)].map((_, i) => (
-                  <svg
-                    key={`full-${i}`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="#FFD700"
-                    className="w-6 h-6"
-                  >
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                ))}
+                {rating?.averageRating != 0 &&
+                  [...Array(stars?.fullstar)].map((_, i) => (
+                    <svg
+                      key={`full-${i}`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="#FFD700"
+                      className="w-6 h-6"
+                    >
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                  ))}
 
                 {/* Render half star */}
                 {stars?.halfstar === 1 && (
@@ -227,6 +260,36 @@ export default function RentalDetail() {
               </div>
               <span className="text-gray-600">({rating?.count} reviews)</span>
             </div>
+            {/* add Rating */}
+            <div className="mt-6 p-6 rounded-lg ">
+              <h3 className="text-lg ">Leave a Review</h3>
+              <div className="flex items-center mt-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <FontAwesomeIcon
+                    key={star}
+                    icon={faStar}
+                    className={`text-2xl cursor-pointer mx-1 ${
+                      userRating >= star ? "text-yellow-500" : "text-gray-300"
+                    }`}
+                    onClick={() => setUserRating(star)}
+                  />
+                ))}
+              </div>
+              <textarea
+                className="w-full mt-3 p-2 border rounded-lg"
+                rows="3"
+                placeholder="Write your review..."
+                value={reviewMessage}
+                onChange={(e) => setReviewMessage(e.target.value)}
+              ></textarea>
+              <button
+                className="mt-3 bg-[#0E0E25] text-white px-4 py-2 rounded-lg "
+                onClick={handleRatingSubmit}
+              >
+                Submit Review
+              </button>
+            </div>
+
             <div className="mt-4">
               <h4 className="text-md font-medium">Rating Review</h4>
               <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-12 relative">
@@ -247,7 +310,7 @@ export default function RentalDetail() {
 
               <div className="flex justify-between mt-4">
                 {ratingloading && <p className="text-gray-500">Loading...</p>}
-                {rating && (
+                {rating && rating.Length > 3 && (
                   <button
                     className="p-3 rounded-[20px] bg-[#0F172A] my-4 w-max text-white text-[12px] block m-auto"
                     onClick={() => {

@@ -1,5 +1,5 @@
 "use client";
-import Ordertable from "@/app/(sides)/admin/components/ui/Tailor-order-table/ordertable";
+import Ordertable from "@/app/(sides)/admin/components/ui/tailor-order-table/ordertable";
 import { ChevronsDown, ChevronsUp, FilterIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../../../../axios/axiosinstance/axiosInstance";

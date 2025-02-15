@@ -6,70 +6,77 @@ import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import { ToastContainer, toast } from "react-toastify";
 import loadRazorpay from "../../../../../../utils/LoadRazorpay";
 import { useRouter } from "next/navigation";
+import { verify } from "crypto";
 const OrderSummary = ({ selectedAddress, setloading }) => {
   const [data, setdata] = useState();
-  const  rounter =useRouter();
-
+  const rounter = useRouter();
+  const [fastShipping, setfastShipping] = useState(false);
+  const [paymenttype, setpaymenttype] = useState("CashOnDelivery");
   const handlePayment = async (totalAmount) => {
     try {
       const response = await axiosInstance.post(
-        `/payment/create-order`, 
-        {}, 
-        { 
+        `/payment/create-order`,
+        {},
+        {
           params: { amount: totalAmount },
-          headers: { Authorization: `Bearer ${localStorage.getItem("userData")}` }
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
         }
       );
-      
-      
-      if(response){
-      const res = await loadRazorpay();
-      if (!res) {
-        toast.error("Failed to load Razorpay. Please try again.");
-        return;
-      }
-  
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY, // Use the correct environment variable
-        amount: response.data.amount * 100, // Convert INR to paise
-        currency: "INR",
-        name: "Belvoir",
-        description: "Order Payment",
-        order_id: response.data.orderId, // Use orderId from the backend response
-        handler: async (response) => {
-          console.log("Payment Success:", response);
-          toast.success("Payment Successful!");
-          try {
-           const verify= await axiosInstance.post("/payment/verify-payment", response, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("userData")}`,
-              },
-              params: {
-                paymentId: response.razorpay_payment_id, 
-                orderId: response.razorpay_order_id,     
-                signature: response.razorpay_signature,  
-              },
-            });
-            if(verify.status==200){
-              rounter.push("/users/paymentcompleted")
+
+      if (response) {
+        const res = await loadRazorpay();
+        if (!res) {
+          toast.error("Failed to load Razorpay. Please try again.");
+          return;
+        }
+
+        const options = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY, // Use the correct environment variable
+          amount: response.data.amount * 100, // Convert INR to paise
+          currency: "INR",
+          name: "Belvoir",
+          description: "Order Payment",
+          order_id: response.data.orderId, // Use orderId from the backend response
+          handler: async (response) => {
+            console.log("Payment Success:", response);
+            toast.success("Payment Successful!");
+            
+            try {
+              const verify = await axiosInstance.post(
+                "/payment/verify-payment",
+                {
+                  paymentId: response?.razorpay_payment_id,
+                  orderId: response?.razorpay_order_id,
+                  signature: response.razorpay_signature,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("userData")}`,
+                  },
+
+                }
+              );
+              if (verify.status == 200) {
+                rounter.push("/users/order-completed");
+              }
+            } catch (error) {
+              toast.error("Payment verification failed.");
+              console.error("Error verifying payment:", error);
             }
-          } catch (error) {
-            toast.error("Payment verification failed.");
-            console.error("Error verifying payment:", error);
-          }
-        },
-        theme: { color: "#3399cc" },
-      };
-  
-      const razor = new window.Razorpay(options);
-      razor.open();
-    }
+          },
+          theme: { color: "#3399cc" },
+        };
+
+        const razor = new window.Razorpay(options);
+        razor.open();
+      }
     } catch (error) {
       console.error("Error in creating the order or loading Razorpay", error);
       toast.error("Failed to create order. Please try again.");
     }
   };
-  
 
   const handlePlaceOrder = async () => {
     if (!selectedAddress) {
@@ -80,9 +87,9 @@ const OrderSummary = ({ selectedAddress, setloading }) => {
       const response = await axiosInstance.post(
         `Order/checkout/rental`,
         {
-          paymentMethod: "CashOnDelivery",
+          paymentMethod: paymenttype,
           shippingAddress: selectedAddress.id,
-          fastShipping: true,
+          fastShipping: fastShipping,
         },
         {
           headers: {
@@ -92,8 +99,21 @@ const OrderSummary = ({ selectedAddress, setloading }) => {
       );
 
       if (response.status === 200) {
-        toast.success("Order Created. Redirecting to Payment...");
-        handlePayment(1);
+        if (response.status === 200) {
+          if (paymenttype === "CashOnDelivery") {
+            setloading(true);
+            toast.success("Order placed successfully");
+            rounter.push("/users/order-completed");
+            setloading(false);
+          } else {
+            toast.success("Redirecting to Payment...");
+            const calculatedAmount = fastShipping
+            ? response?.data.data + 140
+            : response?.data.data + 40;
+          
+            handlePayment(calculatedAmount);             
+          }
+        }
       }
     } catch (error) {
       console.error("Error placing order:", error);
@@ -167,6 +187,43 @@ const OrderSummary = ({ selectedAddress, setloading }) => {
           <p className="text-gray-500">No items in cart</p>
         )}
       </div>
+      <div className="p-4 rounded-lg  w-full">
+        <h2 className="text-lg font-semibold mb-2">Payment Type</h2>
+        <div className="space-y-2">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="payment"
+              value={"CashOnDelivery"}
+              checked={paymenttype === "CashOnDelivery"}
+              className="form-radio"
+              onChange={(e) => setpaymenttype(e.target.value)}
+            />
+            <span>Cash on Delivery</span>
+          </label>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="payment"
+              value="Razorpay"
+              checked={paymenttype === "Razorpay"}
+              className="form-radio"
+              onChange={(e) => setpaymenttype(e.target.value)}
+            />
+            <span>Razorpay</span>
+          </label>
+        </div>
+        <h2 className="text-lg font-semibold mt-4 mb-2">Shipping</h2>
+        <label className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            id="fastShipping"
+            className="form-checkbox"
+            onChange={() => setfastShipping(!fastShipping)}
+          />
+          <span>Fast Shipping</span>
+        </label>
+      </div>
 
       {/* Price Summary */}
       <div className="border-t pt-3">
@@ -180,7 +237,12 @@ const OrderSummary = ({ selectedAddress, setloading }) => {
         </div>
         <div className="flex justify-between font-bold text-lg mt-2">
           <p>Total Amount</p>
-          <p>₹{data?.totalAmount}</p>
+          <p>
+            ₹
+            {fastShipping
+              ? data?.totalAmount + 100 + 40
+              : data?.totalAmount + 40}
+          </p>
         </div>
       </div>
       <div className="flex">

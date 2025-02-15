@@ -3,10 +3,10 @@ import React from "react";
 import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
-
+import { useRouter } from "next/navigation";
 const RentalCards = ({ data, isLoading }) => {
+  const rounter = useRouter();
   const addToCart = async (item) => {
-
     const token = localStorage.getItem("userData");
 
     try {
@@ -25,10 +25,13 @@ const RentalCards = ({ data, isLoading }) => {
       }
       return response.data;
     } catch (error) {
+      if (error.response.status == 401) {
+        toast.error("please login");
+        rounter.push("/login")
+      }
       console.error("cart", error);
     }
   };
-
 
   if (isLoading) {
     return (

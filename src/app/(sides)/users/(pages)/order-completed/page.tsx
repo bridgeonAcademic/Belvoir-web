@@ -7,7 +7,7 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/orders"); // Redirect after 5 seconds
+      router.push("/users/orders"); // Redirect after 5 seconds
     }, 5000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -31,14 +31,14 @@ const PaymentSuccess = () => {
         </svg>
 
         <h2 className="text-2xl font-semibold text-gray-800 mt-4">
-          Payment Successful!
+          Order Successful!
         </h2>
         <p className="text-gray-600 mt-2">
-          Your payment has been processed successfully. You will be redirected to your orders page shortly.
+          Your Order placed  successfully. You will be redirected to your orders page shortly.
         </p>
 
         <button
-          onClick={() => router.push("/orders")}
+          onClick={() => router.push("/users/orders")}
           className="mt-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
         >
           View My Orders

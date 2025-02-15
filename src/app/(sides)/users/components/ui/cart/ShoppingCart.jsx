@@ -6,6 +6,7 @@ import { X, Minus, Plus } from "lucide-react";
 import LoadingSkeleton from "../loading/loadingskel";
 import { useRouter } from "next/navigation";
 import CustomLoading from "../../ui/Loader"
+import { toast } from "react-toastify";
 function ShoppingCart() {
 
   const router=useRouter()
@@ -32,6 +33,10 @@ function ShoppingCart() {
       setError(
         err.response?.data?.message || "Failed to load your fashion selections"
       );
+      if(err.response.status==401){
+              toast.error("please login");
+              router.push("/login")
+      }
     } finally {
       setIsLoading(false);
     }

@@ -87,7 +87,7 @@ const Navbar = () => {
                   <ShoppingCart size={18} />
                 </button>
               </Link>
-              <Link href={"/users/userprofile"}>
+              <Link href={"/users/profile"}>
                 <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                   <User size={18} />
                 </button>
