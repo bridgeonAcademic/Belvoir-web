@@ -65,6 +65,7 @@ const RentalCards = ({data,isLoading}) => {
                 
                   <button className="bg-black text-white rounded-2xl px-4 py-1 hover:bg-white hover:text-black border transition text-[10px]" onClick={() => addToCart(item)}>
                     Add To Cart
+                    </button>
 
                 <div className="text-gray-900 font-bold text-[12px]">₹{item.offerPrice}</div>
                 <Link href={`/users/rentals/${item.id}`}>
@@ -72,6 +73,7 @@ const RentalCards = ({data,isLoading}) => {
                     View
 
                   </button>
+                  </Link>
                 
               </div>
             </div>
@@ -83,6 +85,7 @@ const RentalCards = ({data,isLoading}) => {
         </div>
       )}
     </div>
+    
   );
 };
 

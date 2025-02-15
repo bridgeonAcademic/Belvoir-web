@@ -7,7 +7,7 @@ import axiosInstance from "../../../../../../../axios/axiosinstance/axiosInstanc
 import SimilarProducts from "../../../components/clothes/SimilarProducts";
 import Footer from "../../../components/ui/footer/Footer";
 import Navbar from "../../../components/ui/navbar/Navbar";
-import RatingCard from "../../../components/Clothes/RatingCard";
+import RatingCard from "../../../components/Rentals/RatingCard";
 import { useRouter } from "next/navigation";
 import LoadingUi from "../../../components/ui/loading/loadingui";
 
@@ -107,7 +107,7 @@ export default function ClothDetail({ params }) {
             <span className="text-gray-600">(250 reviews)</span>
           </div>
 
-          {/* Reviews Section */}
+          {/* Reviews Section
           <div className="mt-4">
             <h4 className="text-md font-medium">Rating Review</h4>
             <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-12">
@@ -120,7 +120,25 @@ export default function ClothDetail({ params }) {
             <button className="p-3 rounded-[20px] bg-[#0F172A] my-4 w-max text-white text-[12px] block m-auto">
               View More
             </button>
-          </div>
+          </div> */}
+          {/* Reviews Section */}
+<div className="mt-4">
+  <div className="grid gap-2 lg:grid-cols-3 sm:grid-cols-12">
+    {rating.length > 0 ? (
+      rating.slice(0, 6).map((x, i) => <RatingCard key={i} data={x} />)
+    ) : (
+      <div className="text-gray-500 ">No Reviews Yet..</div>
+    )}
+  </div>
+  
+  {/* Show "View More" button only if there are more than 6 reviews */}
+  {rating.length > 6 && (
+    <button className="p-3 rounded-[20px] bg-[#0F172A] my-4 w-max text-white text-[12px] block m-auto">
+      View More
+    </button>
+  )}
+</div>
+
         </div>
 
         {/* Similar Products */}
