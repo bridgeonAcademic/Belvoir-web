@@ -1,23 +1,18 @@
-"use client"
+"use client";
 import { Heart, Box, Locate } from "lucide-react";
 import Link from "next/link";
 import Navbar from "../../components/ui/navbar/Navbar";
 import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation";
 // compusonents/UserProfile.jsx
 export default function UserProfile() {
   const [data, setdata] = useState();
-  const router=useRouter();
-  const userDetails = {
-    name: "Nabeel",
-    email: "Nabeel@gmail.com",
-    phone: "7356899308",
-    joined: "March 2025",
-    ordersPending: 2,
-    wishlistItems: 4,
-  };
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const recentServices = [
     {
@@ -39,26 +34,26 @@ export default function UserProfile() {
       date: "2023-07-10",
     },
   ];
-  const handleReset=async()=>{
-    try {
-      const response = await axiosInstance.get("/User/profile-user",{
-        headers:{
-          Authorization:`Bearer ${localStorage.getItem("userData")}`
-        }
-      });
-      setdata(response.data.data);
-    } catch (error) {
-      console.log("error in fetching order page data", error);
-    }
-  }
+  // const handleReset = async () => {
+  //   try {
+  //     const response = await axiosInstance.get("/User/profile-user", {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("userData")}`,
+  //       },
+  //     });
+  //     setdata(response.data.data);
+  //   } catch (error) {
+  //     console.log("error in fetching order page data", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axiosInstance.get("/User/profile-user",{
-          headers:{
-            Authorization:`Bearer ${localStorage.getItem("userData")}`
-          }
+        const response = await axiosInstance.get("/User/profile-user", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
         });
         setdata(response.data.data);
       } catch (error) {
@@ -71,6 +66,32 @@ export default function UserProfile() {
     };
     fetchdata();
   }, []);
+
+  const handleResetPassword = async () => {
+    if (oldPassword.length < 8 || newPassword.length < 8) {
+      toast.error("Passwords must be at least 8 characters long");
+      return;
+    }
+    try {
+      await axiosInstance.post(
+        "/tailor/resetpassword",
+        {
+          oldPassword:oldPassword,
+          newPassword:newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
+        }
+      );
+      toast.success("Password reset successful");
+      setShowModal(false);
+    } catch (error) {
+      toast.error("Error resetting password");
+      console.log("Password reset error", error);
+    }
+  };
 
   return (
     <>
@@ -88,25 +109,64 @@ export default function UserProfile() {
                   {data?.name}
                 </h1>
                 <p className="text-gray-600">
-                  Member since {userDetails.joined}
+                  Member since 
                 </p>
                 <div className="mt-2 flex gap-2 justify-center md:justify-start">
                   <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                    {userDetails.ordersPending} Ongoing Orders
+                     Ongoing Orders
                   </span>
                   <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
-                    {userDetails.wishlistItems} Wishlist Items
+                     Wishlist Items
                   </span>
                 </div>
               </div>
-              <button className="w-max block m-auto px-5 py-2 text-gray-600 border-[1px] border-gray-700 rounded-md" onClick={()=>handleReset()}>
+              <button
+                className="w-max block m-auto px-5 py-2 text-gray-600 border-[1px] border-gray-700 rounded-md"
+                onClick={() => setShowModal(true)}
+                >
                 Reset Password
               </button>
             </div>
           </div>
 
-           {/* Account Details */}
-           <div className="bg-white rounded-lg shadow-md p-6 mt-6">
+          {showModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 className="text-xl font-semibold mb-4">Reset Password</h2>
+                <input
+                  type="password"
+                  placeholder="Old Password"
+                  className="w-full p-2 border rounded mb-2"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  className="w-full p-2 border rounded mb-4"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <div className="flex justify-between">
+                  <button
+                    className="px-4 py-2 bg-gray-300 rounded"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                    onClick={handleResetPassword}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Account Details */}
+          <div className="bg-white rounded-lg shadow-md p-6 mt-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Account Details
             </h2>
@@ -191,8 +251,6 @@ export default function UserProfile() {
               ))}
             </div>
           </div>
-
-         
         </div>
       </main>
     </>
