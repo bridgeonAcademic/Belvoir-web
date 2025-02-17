@@ -5,8 +5,8 @@ import Navbar from "../../components/ui/navbar/Navbar";
 import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-// compusonents/UserProfile.jsx
+import {useRouter} from "next/navigation"
+
 export default function UserProfile() {
   const [data, setdata] = useState();
   const router = useRouter();
@@ -67,6 +67,16 @@ export default function UserProfile() {
     fetchdata();
   }, []);
 
+
+  const handlereset = () => {
+    localStorage.removeItem("userData"); 
+    toast.success("logout successfully!")
+    
+    router.push("/"); 
+  };
+
+
+
   const handleResetPassword = async () => {
     if (oldPassword.length < 8 || newPassword.length < 8) {
       toast.error("Passwords must be at least 8 characters long");
@@ -98,7 +108,6 @@ export default function UserProfile() {
       <Navbar></Navbar>
       <main className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl mx-auto">
-          {/* Profile Header */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="w-24 h-24 md:w-20 md:h-20 bg-gray-300 text-blue-500 text-4xl md:text-3xl font-bold flex items-center justify-center rounded-full">
@@ -129,6 +138,8 @@ export default function UserProfile() {
             </div>
           </div>
 
+
+           <div className="bg-white rounded-lg shadow-md p-6 mt-6">
           {showModal && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -182,7 +193,6 @@ export default function UserProfile() {
             </div>
           </div>
 
-          {/* Service Navigation Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-5">
             <button className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
               <Link href={"/users/orders"}>
@@ -215,7 +225,6 @@ export default function UserProfile() {
             </button>
           </div>
 
-          {/* Recent Services Section */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Items to pickup
@@ -251,6 +260,14 @@ export default function UserProfile() {
               ))}
             </div>
           </div>
+
+          <button    className="w-max block mt-4 ml-1 px-5 py-2 text-gray-600 border-[1px] border-gray-700 rounded-md" onClick={handlereset}>
+                Logout
+              </button>
+            
+
+         
+
         </div>
       </main>
     </>
