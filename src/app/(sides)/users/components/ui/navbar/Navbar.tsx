@@ -83,15 +83,22 @@ const Navbar = () => {
 
          
             <div className="flex items-center space-x-6">
+
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <Search size={18} />
               </button>
+              
+              <Link href='/users/cart'>
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <ShoppingCart size={18} />
               </button>
+              </Link>
+              <Link href='/users/profile'>
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <User size={18} />
               </button>
+              </Link>
+
             </div>
           </div>
         </div>

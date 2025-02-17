@@ -1,10 +1,7 @@
-// app/layout.tsx
 import "../../styles/globals.css";
-// import "./globals.css";
-import 'animate.css';
+import Providers from "../app/Provider/Providers";
+import { OrderProvider } from "../app/Provider/OrderProvider";
 
-import Providers from "../app/Provider/Providers"
-import {OrderProvider} from "../app/Provider/OrderProvider"
 export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -14,13 +11,13 @@ export default function Layout({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <Providers>
       <body>
-      <OrderProvider>
-        <div className="">{children}</div>
-      </OrderProvider>
+        <Providers>
+          <OrderProvider>
+            <div className="">{children}</div>
+          </OrderProvider>
+        </Providers>
       </body>
-      </Providers>
     </html>
   );
 }
