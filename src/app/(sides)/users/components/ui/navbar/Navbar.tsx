@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Heart } from "lucide-react";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -89,17 +89,6 @@ const Navbar = () => {
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <Search size={18} />
               </button>
-              
-              <Link href='/users/cart'>
-              <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
-                <ShoppingCart size={18} />
-              </button>
-              </Link>
-              <Link href='/users/profile'>
-              <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
-                <User size={18} />
-              </button>
-              </Link>
 
               {isLoggedIn ? (
                 <>
@@ -111,6 +100,11 @@ const Navbar = () => {
                   <Link href={"/users/profile"}>
                     <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                       <User size={18} />
+                    </button>
+                  </Link>
+                  <Link href={"/users/wishlist"}>
+                    <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
+                      <Heart size={18} />
                     </button>
                   </Link>
                 </>
