@@ -1,9 +1,6 @@
 import "../../styles/globals.css";
 import Providers from "../app/Provider/Providers";
-
 import 'animate.css';
-
-import Providers from "../app/Provider/Providers"
 import { ToastContainer } from "react-toastify";
 export default function Layout({
   children,
