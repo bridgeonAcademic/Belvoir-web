@@ -10,6 +10,7 @@ function Container() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState(false);
+
   const [Material, setMaterial] = useState([]);
   const [designPattern, setDesignPattern] = useState([]);
   const [pageNo, setPageNo] = useState(1); 
@@ -19,11 +20,17 @@ function Container() {
   const [Color,setColor]=useState([]);
 
 
-  const pageSize = 4; 
+
+
+  const pageSize = 10; 
+
+
+
 
   const { data, isLoading } = useFetchAllClothes(query,"price",sort,Material,Color,designPattern,minPrice,maxPrice,pageNo,pageSize);
   const [filteredData, setFilteredData] = useState([]);
   // console.log(Material)
+
 
   
   useEffect(() => {
@@ -38,11 +45,13 @@ function Container() {
       }
 
      
+
       if (data.data.length < pageSize) {
         setHasMore(false); 
       }
     }
   }, [data, pageNo, pageSize,Material]);
+
 
  
   useEffect(() => {
@@ -50,15 +59,15 @@ function Container() {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
      
+
       if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading && hasMore) {
         setPageNo((prev) => prev + 1); 
       }
     };
 
-   
+
     window.addEventListener("scroll", handleScroll);
 
-   
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoading, hasMore]);
 
