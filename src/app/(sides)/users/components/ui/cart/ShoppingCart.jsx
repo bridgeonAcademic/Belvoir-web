@@ -1,11 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axiosInstance from '../../../../../../../axios/axiosinstance/axiosInstance';
+import axiosInstance from "../../../../../../../axios/axiosinstance/axiosInstance";
 import { X, Minus, Plus } from "lucide-react";
 import LoadingSkeleton from "../loading/loadingskel";
-
+import { useRouter } from "next/navigation";
+import CustomLoading from "../../ui/Loader"
+import { toast } from "react-toastify";
 function ShoppingCart() {
+
+
+  const router=useRouter()
+
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,12 +25,13 @@ function ShoppingCart() {
       if (!token) throw new Error("Authentication required");
 
       const response = await axiosInstance.get("/RentalCart/my-cart", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       setCartItems(response.data.data.items || []);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to load cart items");
+
     } finally {
       setIsLoading(false);
     }
@@ -84,13 +91,33 @@ function ShoppingCart() {
     <div className="min-h-screen flex-center text-red-500 text-lg">
       ⚠️ {error}
     </div>
+
   );
 
+  // Loading and error states
+  if (isLoading)
+    return (
+      <CustomLoading></CustomLoading>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen flex-center text-red-500 text-lg">
+        ⚠️ {error}
+      </div>
+    );
+   const handlcheckout=()=>{
+    router.push("/users/checkout")
+   }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <header className="mb-8 text-center space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900">Your Style Selections</h1>
-        <p className="text-gray-500">{cartItems.length} items in your wardrobe</p>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Your Style Selections
+        </h1>
+        <p className="text-gray-500">
+          {cartItems.length} items in your wardrobe
+        </p>
       </header>
 
       {cartItems.length === 0 ? (
@@ -124,8 +151,12 @@ function ShoppingCart() {
 
                 <div className="p-2 space-y-1">
                   <div className="flex flex-col">
-                    <h3 className="font-medium text-sm line-clamp-1">{item.productName}</h3>
-                    <span className="text-indigo-600 text-sm">${item.itemPrice}/day</span>
+                    <h3 className="font-medium text-sm line-clamp-1">
+                      {item.productName}
+                    </h3>
+                    <span className="text-[#0E0E25] text-sm">
+                      ${item.itemPrice}/day
+                    </span>
                   </div>
 
                   <div className="flex items-center justify-between text-xs">
@@ -142,10 +173,11 @@ function ShoppingCart() {
                         onClick={() => updateQuantity(item.itemId, item.quantity + 1)}
                         className="px-1 py-0.5 text-gray-500 hover:bg-gray-100 rounded-r"
                       >
+
                         <Plus className="h-2 w-2" />
                       </button>
                     </div>
-                    <span className="font-medium text-indigo-600 text-sm">
+                    <span className="font-medium text-[#0E0E25] text-sm">
                       ${(item.itemPrice * item.quantity).toFixed(2)}
                     </span>
                   </div>
@@ -158,11 +190,14 @@ function ShoppingCart() {
             <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
               <div className="space-y-1">
                 <div className="text-xl font-bold">
-                  Total Estimate: <span className="text-indigo-600">${total.toFixed(2)}</span>
+                  Total Estimate:{" "}
+                  <span className="text-[#0E0E25]">${total.toFixed(2)}</span>
                 </div>
-                <p className="text-sm text-gray-500">Includes all selected items</p>
+                <p className="text-sm text-gray-500">
+                  Includes all selected items
+                </p>
               </div>
-              <button className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition">
+              <button className="bg-[#0E0E25] text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition" onClick={()=>handlcheckout()}>
                 Secure Checkout
               </button>
             </div>
@@ -174,3 +209,4 @@ function ShoppingCart() {
 }
 
 export default ShoppingCart;
+

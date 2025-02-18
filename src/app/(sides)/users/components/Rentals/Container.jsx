@@ -19,7 +19,7 @@ function Container() {
   });
   const [Data, setData] = useState();
   const [hasMore, setHasMore] = useState(true);
-  const pageSize = 1;
+  const pageSize = 8;
 
   const { data, isLoading } = UsefetchAllRentalProducts(
     pagenumber,
@@ -90,9 +90,9 @@ function Container() {
             <div className="flex flex-grow sm:flex-none rounded-3xl border-2 border-gray-500 overflow-hidden w-full max-w-[280px] sm:max-w-md">
               <input
                 type="text"
-                value={searchdata || ""}
+                value={searchdata || " "}
                 placeholder="Search Something..."
-                className="w-full outline-none bg-white text-gray-600 text-sm px-3 py-2"
+                className="w-full outline-none bg-white text-black text-sm px-3 py-2"
                 onChange={(e) => setsearchdata(e.target.value)}
               />
               <button className="flex items-center justify-center bg-black px-3">

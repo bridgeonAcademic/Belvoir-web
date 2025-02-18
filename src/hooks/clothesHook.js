@@ -1,5 +1,5 @@
 import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { addClothes, deleteClothes,  fetchAllClothes } from "../api/clothes-api"
+import { addClothes, clothesfilterBy, deleteClothes,  fetchAllClothes, fetchClothesforAdmin } from "../api/clothes-api"
 
 
 
@@ -9,6 +9,7 @@ export const useFetchAllClothes = (
   sortBy ,
   isDescending ,
   Material ,
+  Color,
   DesignPattern,
   minPrice = 0,
   maxPrice = 10000,
@@ -16,13 +17,14 @@ export const useFetchAllClothes = (
   pageSize = 10
 ) => {
   return useQuery({
-    queryKey: ["clothes", search, sortBy, isDescending, Material,DesignPattern, minPrice, maxPrice, pageNo, pageSize],
+    queryKey: ["clothes", search, sortBy, isDescending, Material,Color,DesignPattern, minPrice, maxPrice, pageNo, pageSize],
     queryFn: () =>
       fetchAllClothes({
         search,
         sortBy,
         isDescending,
         Material,
+        Color,
         DesignPattern,
         minPrice,
         maxPrice,
@@ -34,21 +36,42 @@ export const useFetchAllClothes = (
   });
 };
 
+export const useFetchClothesAdmin=(
+  search,
+  pageNo,
+  pageSize
 
-// export const useFetchAllClothes=(search,pageNo,pageSize)=>{
-//     return useQuery({
-//         queryKey:["clothes"],
-//         queryFn:()=>fetchAllClothes(search,pageNo,pageSize)
-//     });
+)=>{
+  return useQuery({
+    queryKey: ["clothes", search,pageNo, pageSize],
+    queryFn: () =>
+      fetchClothesforAdmin({
+        search, 
+        pageNo,
+        pageSize
+      }),
+    keepPreviousData: true, // Helps with pagination performance
+    staleTime: 300000, // 5 minutes to avoid unnecessary refetching
+  });
+};
+
+
+
+
+
+export const useClothesFilterBy=()=>{
+  return useQuery({
+    queryKey:['admin-clothes'],
+    queryFn:clothesfilterBy
+  })
+};
+
+// export const useFetchRatings=(id)=>{
+//   return useQuery({
+//     queryKey:['clothes',id],
+//     queryFn:()=>fetchRating({id})
+//   })
 // };
-
-// export const useFetchClothesWithoutQuery=()=>{
-//     return useQuery({
-//         queryKey:["clothes"],
-//         queryFn:fetchClothesWithoutQuery
-//     });
-// };
-
 export const useAddClothes=()=>{
     const queryClient=useQueryClient();
     return useMutation({
@@ -81,6 +104,6 @@ export const useDeleteClothes=()=>{
 // }
 export const useEditClothes = () => {
     return useMutation(({ id, formData }) =>
-      axiosInstance.put(`/Clothes/update${id}`, formData)
+      axiosInstance.put(`/Clothes/update/${id}`, formData)
     );
   };

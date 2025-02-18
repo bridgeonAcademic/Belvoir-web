@@ -1,7 +1,10 @@
 import "../../styles/globals.css";
 import Providers from "../app/Provider/Providers";
-import { OrderProvider } from "../app/Provider/OrderProvider";
 
+import 'animate.css';
+
+import Providers from "../app/Provider/Providers"
+import { ToastContainer } from "react-toastify";
 export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -13,9 +16,8 @@ export default function Layout({
       </head>
       <body>
         <Providers>
-          <OrderProvider>
+            <ToastContainer />
             <div className="">{children}</div>
-          </OrderProvider>
         </Providers>
       </body>
     </html>

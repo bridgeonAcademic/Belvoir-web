@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
 import { Heart, ShoppingCart, BadgeCheck, Loader2 } from "lucide-react";
 import Link from "next/link";
-
+import { toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 const RentalCards = ({ data, isLoading }) => {
   const [loadingCart, setLoadingCart] = useState({});
   const [loadingWish, setLoadingWish] = useState({});
+  const rounter = useRouter();
 
   const addToCart = async (item) => {
     setLoadingCart((prev) => ({ ...prev, [item.id]: "loading" }));
+
 
     const token = localStorage.getItem("userData");
     try {
@@ -51,6 +54,7 @@ const RentalCards = ({ data, isLoading }) => {
     } catch (error) {
       console.error("wish", error);
       setLoadingWish((prev) => ({ ...prev, [item.id]: null }));
+
     }
   };
 
@@ -145,6 +149,7 @@ const RentalCards = ({ data, isLoading }) => {
           <div className="text-center col-span-full text-gray-500 text-xl">No items found.</div>
         )}
       </div>
+
     </div>
   );
 };
