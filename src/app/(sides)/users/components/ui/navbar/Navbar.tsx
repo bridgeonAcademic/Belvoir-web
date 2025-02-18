@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
@@ -29,7 +28,7 @@ const Navbar = () => {
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
 
-              {/* Logo */}
+             
               <Link href="#">
                 <div className="flex-shrink-0 flex gap-2">
                   <Image
@@ -55,22 +54,26 @@ const Navbar = () => {
                     Home
                   </div>
                 </Link>
+
                 <Link href="/users/clothes">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     Tailoring
                   </div>
                 </Link>
-                <Link href="/users/Rentals">
+
+                <Link href="/users/rentals">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     Rentals
                   </div>
                 </Link>
-                <Link href="#">
+
+                <Link href="/users/about">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     About
                   </div>
                 </Link>
-                <Link href="#">
+
+                <Link href="/users/contact">
                   <div className="px-3 py-2 text-gray-900 hover:text-gray-600 text-sm font-medium transition-colors duration-200">
                     Contact
                   </div>
@@ -78,22 +81,28 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Icons - always visible */}
+         
             <div className="flex items-center space-x-6">
+
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <Search size={18} />
               </button>
+              
+              <Link href='/users/cart'>
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <ShoppingCart size={18} />
               </button>
+              </Link>
+              <Link href='/users/profile'>
               <button className="p-2 text-gray-900 hover:text-gray-600 transition-colors duration-200">
                 <User size={18} />
               </button>
+              </Link>
+
             </div>
           </div>
         </div>
 
-        {/* Mobile menu - only for navigation links */}
         <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
           <div className="px-4 pt-2 pb-4 space-y-2 bg-white/40 backdrop-blur-md">
             <Link href="#">
