@@ -1,8 +1,8 @@
+// app/layout.tsx
 import "../../styles/globals.css";
-import 'animate.css';
-
+// import "./globals.css";
 import Providers from "../app/Provider/Providers"
-import { ToastContainer } from "react-toastify";
+
 export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -14,10 +14,8 @@ export default function Layout({
       </head>
       <Providers>
       <body>
-        <div className="">
-        <ToastContainer />
-          {children}
-        </div>
+      
+        <div className="">{children}</div>
       </body>
       </Providers>
     </html>
