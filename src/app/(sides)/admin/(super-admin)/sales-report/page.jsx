@@ -5,17 +5,15 @@ import axiosInstance from '../../../../../../axios/axiosinstance/axiosInstance';
 import TableLoading from '../components/shimmerui/tableloading'
 
 const SalesTable = () => {
+  // State to store sales data
   const [salesData, setSalesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch sales data from the API
   const fetchSalesData = async () => {
     try {
-      const response = await axiosInstance.get('/Admin/sales-report',{
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("userData")}`,
-        },
-      });
+      const response = await axiosInstance.get('/Admin/sales-report');
       setSalesData(response.data.data);
       console.log(salesData);
 
@@ -26,6 +24,7 @@ const SalesTable = () => {
     }
   };
 
+  // Fetch data on component mount
   useEffect(() => {
     fetchSalesData();
   }, []);
@@ -34,6 +33,7 @@ const SalesTable = () => {
     <div className="w-full">
       <div className="overflow-x-auto">
         <div className="min-w-full">
+          {/* Header */}
           <div className="border-b">
             <div className="flex">
               <div className="flex-1 px-4 py-3 text-sm text-gray-600">Date</div>
@@ -46,6 +46,7 @@ const SalesTable = () => {
             </div>
           </div>
 
+          {/* Body */}
           <div>
             {loading && <TableLoading/>}
             {error && <p className="px-4 py-3 text-red-500">{error}</p>}

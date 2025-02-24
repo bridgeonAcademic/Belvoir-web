@@ -12,7 +12,6 @@ import {
   Legend,
 } from "chart.js";
 import { useFetchDetails } from "@/hooks/dashboardHooks";
-import LoadingUi from "../../../../users/components/ui/loading/loadingui";
 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -22,7 +21,7 @@ const SalesBarChart = () => {
   const { data, isLoading, isError, error } = useFetchDetails();
 
   if (isLoading) {
-    return <LoadingUi/>;
+    return <p>Loading...</p>;
   }
 
   if (isError) {
