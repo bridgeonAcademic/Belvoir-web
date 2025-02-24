@@ -1,142 +1,240 @@
 "use client";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axiosInstance from "../../../../../../axios/axiosinstance/axiosInstance";
+import { toast } from "react-toastify";
+import { FaEdit, FaTrash, FaMapMarkerAlt, FaPlus } from "react-icons/fa";
+import Navbar from "../../components/ui/navbar/Navbar";
+import { Loader } from "lucide-react";
 
-const OrderDetails = () => {
-  const router = useRouter();
+const Address = () => {
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const initialValues = {
-    fullName: "",
-    phoneNumber: "",
-    address: "",
-    state: "",
-    pincode: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  
+  // Fetch addresses from API
+  const fetchAddresses = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("/Address/user", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userData")}`,
+        },
+      });
+      setAddresses(response.data.data);
+    } catch (error) {
+      console.error("Error fetching addresses:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const validationSchema = Yup.object({
-    fullName: Yup.string().required("Full Name is required"),
-    phoneNumber: Yup.string()
-      .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
-      .required("Phone Number is required"),
-    address: Yup.string().required("Address is required"),
-    state: Yup.string().required("State is required"),
-    pincode: Yup.string()
-      .matches(/^[0-9]{6}$/, "Pincode must be 6 digits")
-      .required("Pincode is required"),
-  });
+  // Add or Edit Address
+  const handleSave = async (data) => {
+    setLoading(true);
+    try {
+      if (selectedAddress) {
+        // Edit address
+        await axiosInstance.put(`/Address/${selectedAddress.id}`, data, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
+        });
+        toast.success("Address updated successfully");
+      } else {
+        // Add new address
+        await axiosInstance.post("/Address/Add", data, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userData")}`,
+          },
+        });
+        toast.success("Address added successfully");
+      }
+      fetchAddresses();
+      closeModal();
+    } catch (error) {
+      toast.error("Error saving address");
+      console.error("Error saving address:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleSave = (values) => {
-    localStorage.setItem("orderDetails", JSON.stringify(values));
-    router.push("/users/Summary");
+  // Delete Address
+  const deleteAddress = async (id) => {
+    setLoading(true);
+    try {
+      await axiosInstance.delete(`/Address/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userData")}`,
+        },
+      });
+      toast.success("Address deleted successfully");
+      fetchAddresses();
+    } catch (error) {
+      toast.error("Error deleting address");
+      console.error("Error deleting address:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Open Modal
+  const openModal = (address = null) => {
+    setSelectedAddress(address);
+    setIsModalOpen(true);
+    reset(address || {});
+  };
+
+  // Close Modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedAddress(null);
+    reset();
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center">
-      {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/clothes/clothess.png')", // ✅ Change to your image path
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-50"></div> {/* ✅ Dark overlay */}
-      </div>
+    <>
+      <Navbar />
 
-      {/* Form Container */}
-      <div className="relative max-w-lg mx-auto p-6 h-[600px] font-sans overflow-auto scrollbar-hide w-[700px] bg-white bg-opacity-90 backdrop-blur-md shadow-lg rounded-lg">
-        {/* Back Button */}
-      
+      {loading ? (
+        <div className="flex justify-center items-center mx-auto  h-screen w-full">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <div className="p-6">
+          <h2 className="text-2xl mb-9 text-[#0E0E25] w-max block mx-auto">
+            Manage Address
+          </h2>
 
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Add Delivery Address
-        </h2>
+          {/* Address List */}
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSave}
-        >
-          <Form className="space-y-6">
-            {/* Full Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <Field
-                type="text"
-                name="fullName"
-                className="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-800"
-              />
-              <ErrorMessage name="fullName" component="div" className="text-sm text-red-500 mt-1" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            {addresses?.map((address) => (
+              <div
+                key={address.id}
+                className="bg-white shadow-custom p-6 rounded-lg flex items-center justify-between cursor-pointer hover:shadow-lg transition"
+              >
+                <div>
+                  <h3 className="text-lg flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-blue-500" />{" "}
+                    {address.contactName}
+                  </h3>
+                  <p className="text-gray-600">
+                    {address.street}, {address.city}, {address.state},{" "}
+                    {address.postalCode}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <FaEdit
+                    className="text-xl cursor-pointer hover:text-blue-500"
+                    onClick={() => openModal(address)}
+                  />
+                  <FaTrash
+                    className="text-xl cursor-pointer hover:text-red-500"
+                    onClick={() => deleteAddress(address.id)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Add New Address Button */}
+          <button
+            onClick={() => openModal()}
+            className="mt-6 bg-[#0E0E25] text-white px-6 py-3 rounded-lg flex items-center gap-3 hover:bg-blue-600"
+          >
+            <FaPlus /> Add New Address
+          </button>
+
+          {/* Address Modal */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+                <h2 className="text-xl font-bold mb-4">
+                  {selectedAddress ? "Edit Address" : "Add New Address"}
+                </h2>
+                <form onSubmit={handleSubmit(handleSave)}>
+                  <input
+                    {...register("contactName", {
+                      required: "Contact Name is required",
+                    })}
+                    placeholder="Contact Name"
+                    className="w-full p-2 border rounded mb-2"
+                  />
+                  {errors.contactName && (
+                    <p className="text-red-500">{errors.contactName.message}</p>
+                  )}
+
+                  <input
+                    {...register("street", { required: "Street is required" })}
+                    placeholder="Street"
+                    className="w-full p-2 border rounded mb-2"
+                  />
+                  {errors.street && (
+                    <p className="text-red-500">{errors.street.message}</p>
+                  )}
+
+                  <input
+                    {...register("city", { required: "City is required" })}
+                    placeholder="City"
+                    className="w-full p-2 border rounded mb-2"
+                  />
+                  <input
+                    {...register("state", { required: "State is required" })}
+                    placeholder="State"
+                    className="w-full p-2 border rounded mb-2"
+                  />
+                  <input
+                    {...register("postalCode", {
+                      required: "Postal Code is required",
+                      pattern: {
+                        value: /^\d{6}$/,
+                        message: "Postal Code must be 6 digits",
+                      },
+                    })}
+                    placeholder="Postal Code"
+                    className="w-full p-2 border rounded mb-2"
+                  />
+                  {errors.postalCode && (
+                    <p className="text-red-500">{errors.postalCode.message}</p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg w-full"
+                  >
+                    Save
+                  </button>
+                </form>
+                <button
+                  onClick={closeModal}
+                  className="mt-2 w-full bg-gray-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Close
+                </button>
+              </div>
             </div>
-
-            {/* Phone Number */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Phone Number
-              </label>
-              <Field
-                type="tel"
-                name="phoneNumber"
-                className="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-800"
-              />
-              <ErrorMessage name="phoneNumber" component="div" className="text-sm text-red-500 mt-1" />
-            </div>
-
-            {/* Address */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Address
-              </label>
-              <Field
-                as="textarea"
-                name="address"
-                rows="3"
-                className="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-800"
-              />
-              <ErrorMessage name="address" component="div" className="text-sm text-red-500 mt-1" />
-            </div>
-
-            {/* State */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                State
-              </label>
-              <Field
-                type="text"
-                name="state"
-                className="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-800"
-              />
-              <ErrorMessage name="state" component="div" className="text-sm text-red-500 mt-1" />
-            </div>
-
-            {/* Pincode */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Pincode
-              </label>
-              <Field
-                type="text"
-                name="pincode"
-                className="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-gray-800"
-              />
-              <ErrorMessage name="pincode" component="div" className="text-sm text-red-500 mt-1" />
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white font-semibold rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition"
-            >
-              Save Address
-            </button>
-          </Form>
-        </Formik>
-      </div>
-    </div>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 
-export default OrderDetails;
+export default Address;
+
